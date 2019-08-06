@@ -39,20 +39,26 @@ namespace AwesomeWallpaper.Utils
 
         public static string GetTotalMemory()
         {
-            GetPerformanceInfo(out var info, Marshal.SizeOf<PerformanceInformation>());
-            return $"{info.PhysicalTotal >> 8} MB";
+            var info = new PerformanceInformation();
+            info.cb = Marshal.SizeOf<PerformanceInformation>();
+            GetPerformanceInfo(ref info, Marshal.SizeOf<PerformanceInformation>());
+            return $"{info.PhysicalTotal.ToInt64() >> 8} MB";
         }
 
         public static string GetAvailableMemory()
         {
-            GetPerformanceInfo(out var info, Marshal.SizeOf<PerformanceInformation>());
-            return $"{info.PhysicalAvailable >> 8} MB";
+            var info = new PerformanceInformation();
+            info.cb = Marshal.SizeOf<PerformanceInformation>();
+            GetPerformanceInfo(ref info, Marshal.SizeOf<PerformanceInformation>());
+            return $"{info.PhysicalAvailable.ToInt64() >> 8} MB";
         }
 
         public static string GetCommits()
         {
-            GetPerformanceInfo(out var info, Marshal.SizeOf<PerformanceInformation>());
-            return $"{info.CommitTotal >> 8} MB / {info.CommitLimit >> 8} MB";
+            var info = new PerformanceInformation();
+            info.cb = Marshal.SizeOf<PerformanceInformation>();
+            GetPerformanceInfo(ref info, Marshal.SizeOf<PerformanceInformation>());
+            return $"{info.CommitTotal.ToInt64() >> 8} MB / {info.CommitLimit.ToInt64() >> 8} MB";
         }
 
         public static int GetNumberProcessors()
@@ -62,19 +68,25 @@ namespace AwesomeWallpaper.Utils
 
         public static uint GetNumberProcesses()
         {
-            GetPerformanceInfo(out var info, Marshal.SizeOf<PerformanceInformation>());
+            var info = new PerformanceInformation();
+            info.cb = Marshal.SizeOf<PerformanceInformation>();
+            GetPerformanceInfo(ref info, Marshal.SizeOf<PerformanceInformation>());
             return info.ProcessCount;
         }
 
         public static uint GetNumberThreads()
         {
-            GetPerformanceInfo(out var info, Marshal.SizeOf<PerformanceInformation>());
+            var info = new PerformanceInformation();
+            info.cb = Marshal.SizeOf<PerformanceInformation>();
+            GetPerformanceInfo(ref info, Marshal.SizeOf<PerformanceInformation>());
             return info.ThreadCount;
         }
 
         public static uint GetNumberHandles()
         {
-            GetPerformanceInfo(out var info, Marshal.SizeOf<PerformanceInformation>());
+            var info = new PerformanceInformation();
+            info.cb = Marshal.SizeOf<PerformanceInformation>();
+            GetPerformanceInfo(ref info, Marshal.SizeOf<PerformanceInformation>());
             return info.HandleCount;
         }
 

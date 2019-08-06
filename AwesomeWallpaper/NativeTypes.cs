@@ -7,16 +7,16 @@ namespace AwesomeWallpaper
     public struct PerformanceInformation
     {
         public int cb;
-        public uint CommitTotal;
-        public uint CommitLimit;
-        public uint CommitPeak;
-        public uint PhysicalTotal;
-        public uint PhysicalAvailable;
-        public uint SystemCache;
-        public uint KernelTotal;
-        public uint KernelPaged;
-        public uint KernelNonpaged;
-        public uint PageSize;
+        public IntPtr CommitTotal;
+        public IntPtr CommitLimit;
+        public IntPtr CommitPeak;
+        public IntPtr PhysicalTotal;
+        public IntPtr PhysicalAvailable;
+        public IntPtr SystemCache;
+        public IntPtr KernelTotal;
+        public IntPtr KernelPaged;
+        public IntPtr KernelNonpaged;
+        public IntPtr PageSize;
         public uint HandleCount;
         public uint ProcessCount;
         public uint ThreadCount;

@@ -35,8 +35,8 @@ namespace AwesomeWallpaper
         [DllImport("user32")]
         public static extern IntPtr GetDesktopWindow();
 
-        [DllImport("psapi")]
-        public static extern bool GetPerformanceInfo(out PerformanceInformation pi, int size);
+        [DllImport("psapi", SetLastError = true)]
+        public static extern bool GetPerformanceInfo(ref PerformanceInformation pi, int size);
 
         [DllImport("kernel32")]
         public static extern bool GetVersionEx(ref OSVersionInfoEx versionInfo);
