@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="AwesomeWallpaper.Views.GalleryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AwesomeWallpaper.Views"
+             mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open" CanExecute="Open_CanExecute" Executed="Open_Executed" />
+        <CommandBinding Command="MediaCommands.Play" CanExecute="Play_CanExecute" Executed="Play_Executed" />
+        <CommandBinding Command="MediaCommands.Pause" CanExecute="Pause_CanExecute" Executed="Pause_Executed" />
+        <CommandBinding Command="MediaCommands.Stop" CanExecute="Stop_CanExecute" Executed="Stop_Executed" />
+    </UserControl.CommandBindings>
+    <Grid VerticalAlignment="{Binding Settings.GalleryVerticalAlignment}" HorizontalAlignment="{Binding Settings.GalleryHorizontalAlignment}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="{Binding ToolBarHeight}" />
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" x:Name="Image" Stretch="{Binding Settings.GalleryStretch}"></Image>
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch" Width="170" Visibility="{Binding ToolBarVisibility}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Command="ApplicationCommands.Open" Width="32" Height="32" Cursor="Hand">
+                <Image Source="/Images/folder.png" />
+            </Button>
+            <Button Grid.Column="1" Command="MediaCommands.Play" Width="32" Height="32" Cursor="Hand">
+                <Image Source="/Images/play.png" />
+            </Button>
+            <Button Grid.Column="2" Command="MediaCommands.Pause" Width="32" Height="32" Cursor="Hand">
+                <Image Source="/Images/pause.png" />
+            </Button>
+            <Button Grid.Column="3" Command="MediaCommands.Stop" Width="32" Height="32" Cursor="Hand">
+                <Image Source="/Images/stop.png" />
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>
