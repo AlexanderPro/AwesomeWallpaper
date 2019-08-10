@@ -24,8 +24,8 @@
         <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Width="72" Height="72" Source="/Images/AwesomeWallpaper.png" VerticalAlignment="Top" HorizontalAlignment="Left"></Image>
         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ProductName}"></TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Copyright}"></TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="1" Visibility="Collapsed">
-            <Hyperlink NavigateUri="https://github.com/AlexanderPro/AwesomeWallpaper" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/AlexanderPro/AwesomeWallpaper</Hyperlink>
+        <TextBlock Grid.Row="2" Grid.Column="1">
+            <Hyperlink NavigateUri="http://awesome-wallpaper.com" RequestNavigate="Hyperlink_RequestNavigate">http://awesome-wallpaper.com</Hyperlink>
         </TextBlock>
         <Button Grid.Row="0" Grid.Column="2" Content="Ok" IsDefault="True" IsCancel="True" Padding="4" Width="90" Command="{Binding OkCommand}"></Button>
     </Grid>
