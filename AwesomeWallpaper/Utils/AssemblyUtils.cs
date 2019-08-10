@@ -51,6 +51,15 @@ namespace AwesomeWallpaper.Utils
             }
         }
 
+        public static string AssemblyProductVersion
+        {
+            get
+            {
+                var version = Assembly.GetExecutingAssembly().GetName().Version;
+                return $"{version.Major}.{version.Minor}.{version.Build}";
+            }
+        }
+
         public static string AssemblyLocation
         {
             get

@@ -21,7 +21,7 @@ namespace AwesomeWallpaper.ViewModels
         {
             get
             {
-                return $"{AssemblyUtils.AssemblyProductName} v{AssemblyUtils.AssemblyVersion}";
+                return $"{AssemblyUtils.AssemblyProductName} v{AssemblyUtils.AssemblyProductVersion}";
             }
         }
 
