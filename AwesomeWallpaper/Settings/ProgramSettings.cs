@@ -92,6 +92,13 @@ namespace AwesomeWallpaper.Settings
             set { SetProperty(ref _videoStretch, value); }
         }
 
+        private double _videoTransparency = 0;
+        public double VideoTransparency
+        {
+            get { return _videoTransparency; }
+            set { SetProperty(ref _videoTransparency, value); }
+        }
+
         private int _galleryIntervalBetweenImages = 3;
         public int GalleryIntervalBetweenImages
         {
@@ -148,6 +155,13 @@ namespace AwesomeWallpaper.Settings
             set { SetProperty(ref _galleryStretch, value); }
         }
 
+        private double _galleryTransparency = 0;
+        public double GalleryTransparency
+        {
+            get { return _galleryTransparency; }
+            set { SetProperty(ref _galleryTransparency, value); }
+        }
+
         private string _imageFileName = "";
         public string ImageFileName
         {
@@ -174,6 +188,13 @@ namespace AwesomeWallpaper.Settings
         {
             get { return _imageStretch; }
             set { SetProperty(ref _imageStretch, value); }
+        }
+
+        private double _imageTransparency = 0;
+        public double ImageTransparency
+        {
+            get { return _imageTransparency; }
+            set { SetProperty(ref _imageTransparency, value); }
         }
 
         private string _systemInformationFontFamily = "Arial";
@@ -243,6 +264,13 @@ namespace AwesomeWallpaper.Settings
         {
             get { return _systemInformationVerticalAlignment; }
             set { SetProperty(ref _systemInformationVerticalAlignment, value); }
+        }
+
+        private double _systemInformationTransparency = 0;
+        public double SystemInformationTransparency
+        {
+            get { return _systemInformationTransparency; }
+            set { SetProperty(ref _systemInformationTransparency, value); }
         }
 
         private List<string> _videoFileExtensions = new List<string> { "*.mp4", "*.mp3", "*.mpg", "*.mpeg", "*.avi" };

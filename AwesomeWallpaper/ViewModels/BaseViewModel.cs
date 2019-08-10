@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using AwesomeWallpaper.Settings;
 
 namespace AwesomeWallpaper.ViewModels
@@ -17,6 +15,11 @@ namespace AwesomeWallpaper.ViewModels
         }
 
         public bool IsHitTestVisible => Settings.InteractiveMode;
+
+        public double Opacity => Settings.WallpaperType == WallpaperType.SystemInformation ? 1 - Settings.SystemInformationTransparency :
+                                 Settings.WallpaperType == WallpaperType.Video ? 1 - Settings.VideoTransparency :
+                                 Settings.WallpaperType == WallpaperType.Image ? 1 - Settings.ImageTransparency :
+                                 Settings.WallpaperType == WallpaperType.Gallery ? 1 - Settings.GalleryTransparency : 1;
 
         public virtual void Update()
         {

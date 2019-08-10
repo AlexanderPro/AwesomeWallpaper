@@ -59,6 +59,8 @@
                             <RowDefinition Height="25" />
                             <RowDefinition Height="12" />
                             <RowDefinition Height="25" />
+                            <RowDefinition Height="12" />
+                            <RowDefinition Height="25" />
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Horizontal Alignment:" Grid.Row="0" VerticalAlignment="Center" />
@@ -88,8 +90,11 @@
                         <TextBlock Grid.Row="8" Text="Text Color:" VerticalAlignment="Center"/>
                         <t:ColorPicker Grid.Row="8" Grid.Column="2" Padding="3" SelectedColor="{Binding SystemInformationTextColor, Mode=TwoWay}" />
 
-                        <TextBlock Text="Refresh Interval (H:M:S):" Grid.Row="10" VerticalAlignment="Center" />
-                        <ComboBox Grid.Row="10" Grid.Column="2" Padding="3" ItemsSource="{Binding RefreshIntervalItems}" SelectedValue="{Binding SystemInformationInterval, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+                        <TextBlock Text="Transparency:" Grid.Row="10" VerticalAlignment="Center" />
+                        <Slider Grid.Row="10" Grid.Column="2" Minimum="0" Maximum="1" Value="{Binding SystemInformationTransparency, Mode=TwoWay}" VerticalAlignment="Center"/>
+
+                        <TextBlock Text="Refresh Interval (H:M:S):" Grid.Row="12" VerticalAlignment="Center" />
+                        <ComboBox Grid.Row="12" Grid.Column="2" Padding="3" ItemsSource="{Binding RefreshIntervalItems}" SelectedValue="{Binding SystemInformationInterval, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
                     </Grid>
                 </StackPanel>
             </TabItem>
@@ -102,6 +107,8 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="12" />
                             <RowDefinition Height="25" />
                             <RowDefinition Height="12" />
                             <RowDefinition Height="25" />
@@ -130,6 +137,9 @@
 
                         <TextBlock Text="Stretch:" Grid.Row="6" VerticalAlignment="Center" />
                         <ComboBox Grid.Row="6" Grid.Column="2" Padding="3" ItemsSource="{Binding Stretches}" SelectedValue="{Binding ImageStretch, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+
+                        <TextBlock Text="Transparency:" Grid.Row="8" VerticalAlignment="Center" />
+                        <Slider Grid.Row="8" Grid.Column="2" Minimum="0" Maximum="1" Value="{Binding ImageTransparency, Mode=TwoWay}" VerticalAlignment="Center"/>
                     </Grid>
                 </StackPanel>
             </TabItem>
@@ -142,6 +152,8 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="12" />
                             <RowDefinition Height="25" />
                             <RowDefinition Height="12" />
                             <RowDefinition Height="25" />
@@ -185,6 +197,9 @@
 
                         <TextBlock Text="Stretch:" Grid.Row="12" VerticalAlignment="Center" />
                         <ComboBox Grid.Row="12" Grid.Column="2" Padding="3" ItemsSource="{Binding Stretches}" SelectedValue="{Binding GalleryStretch, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+
+                        <TextBlock Text="Transparency:" Grid.Row="14" VerticalAlignment="Center" />
+                        <Slider Grid.Row="14" Grid.Column="2" Minimum="0" Maximum="1" Value="{Binding GalleryTransparency, Mode=TwoWay}" VerticalAlignment="Center"/>
                     </Grid>
                 </StackPanel>
             </TabItem>
@@ -197,6 +212,8 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="12" />
                             <RowDefinition Height="25" />
                             <RowDefinition Height="12" />
                             <RowDefinition Height="25" />
@@ -240,6 +257,9 @@
 
                         <TextBlock Text="Volume:" Grid.Row="12" VerticalAlignment="Center" />
                         <Slider Grid.Row="12" Grid.Column="2" Minimum="0" Maximum="1" Value="{Binding VideoVolume, Mode=TwoWay}" VerticalAlignment="Center"/>
+
+                        <TextBlock Text="Transparency:" Grid.Row="14" VerticalAlignment="Center" />
+                        <Slider Grid.Row="14" Grid.Column="2" Minimum="0" Maximum="1" Value="{Binding VideoTransparency, Mode=TwoWay}" VerticalAlignment="Center"/>
                     </Grid>
                 </StackPanel>
             </TabItem>

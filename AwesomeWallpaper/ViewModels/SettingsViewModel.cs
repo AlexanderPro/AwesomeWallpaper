@@ -25,10 +25,12 @@ namespace AwesomeWallpaper.ViewModels
             SystemInformationInterval = settings.SystemInformationRefreshInterval == null ? (TimeSpan?)null : TimeSpan.FromSeconds(settings.SystemInformationRefreshInterval.Value);
             SystemInformationHorizontalAlignment = settings.SystemInformationHorizontalAlignment;
             SystemInformationVerticalAlignment = settings.SystemInformationVerticalAlignment;
+            SystemInformationTransparency = settings.SystemInformationTransparency;
             ImageFileName = settings.ImageFileName;
             ImageHorizontalAlignment = settings.ImageHorizontalAlignment;
             ImageVerticalAlignment = settings.ImageVerticalAlignment;
             ImageStretch = settings.ImageStretch;
+            ImageTransparency = settings.ImageTransparency;
             GalleryIntervalBetweenImages = settings.GalleryIntervalBetweenImages;
             GalleryIntervalForShowImage = settings.GalleryIntervalForShowImage;
             GalleryAutoPlay = settings.GalleryAutoPlay;
@@ -37,6 +39,7 @@ namespace AwesomeWallpaper.ViewModels
             GalleryHorizontalAlignment = settings.GalleryHorizontalAlignment;
             GalleryVerticalAlignment = settings.GalleryVerticalAlignment;
             GalleryStretch = settings.GalleryStretch;
+            GalleryTransparency = settings.GalleryTransparency;
             VideoFileName = settings.VideoFileName;
             VideoAutoPlay = settings.VideoAutoPlay;
             VideoRepeat = settings.VideoRepeat;
@@ -44,13 +47,21 @@ namespace AwesomeWallpaper.ViewModels
             VideoVerticalAlignment = settings.VideoVerticalAlignment;
             VideoStretch = settings.VideoStretch;
             VideoVolume = settings.VideoVolume;
+            VideoTransparency = settings.VideoTransparency;
         }
-    
+
         private int _selectedTabIndex;
         public int SelectedTabIndex
         {
             get { return _selectedTabIndex; }
             set { SetProperty(ref _selectedTabIndex, value); }
+        }
+
+        private int? _monitor;
+        public int? Monitor
+        {
+            get { return _monitor; }
+            set { SetProperty(ref _monitor, value); }
         }
 
         private WallpaperType _wallpaperType;
@@ -109,6 +120,13 @@ namespace AwesomeWallpaper.ViewModels
             set { SetProperty(ref _videoVolume, value); }
         }
 
+        private double _videoTransparency = 0;
+        public double VideoTransparency
+        {
+            get { return _videoTransparency; }
+            set { SetProperty(ref _videoTransparency, value); }
+        }
+
         private int _galleryIntervalBetweenImages;
         public int GalleryIntervalBetweenImages
         {
@@ -165,25 +183,11 @@ namespace AwesomeWallpaper.ViewModels
             set { SetProperty(ref _galleryStretch, value); }
         }
 
-        private int? _monitor;
-        public int? Monitor
+        private double _galleryTransparency = 0;
+        public double GalleryTransparency
         {
-            get { return _monitor; }
-            set { SetProperty(ref _monitor, value); }
-        }
-
-        private double _width;
-        public double Width
-        {
-            get { return _width; }
-            set { SetProperty(ref _width, value); }
-        }
-
-        private double _height;
-        public double Height
-        {
-            get { return _height; }
-            set { SetProperty(ref _height, value); }
+            get { return _galleryTransparency; }
+            set { SetProperty(ref _galleryTransparency, value); }
         }
 
         private string _imageFileName = "";
@@ -212,6 +216,13 @@ namespace AwesomeWallpaper.ViewModels
         {
             get { return _imageStretch; }
             set { SetProperty(ref _imageStretch, value); }
+        }
+
+        private double _imageTransparency = 0;
+        public double ImageTransparency
+        {
+            get { return _imageTransparency; }
+            set { SetProperty(ref _imageTransparency, value); }
         }
 
         private FontFamily _systemInformationFontFamily;
@@ -254,6 +265,13 @@ namespace AwesomeWallpaper.ViewModels
         {
             get { return _systemInformationVerticalAlignment; }
             set { SetProperty(ref _systemInformationVerticalAlignment, value); }
+        }
+
+        private double _systemInformationTransparency = 0;
+        public double SystemInformationTransparency
+        {
+            get { return _systemInformationTransparency; }
+            set { SetProperty(ref _systemInformationTransparency, value); }
         }
 
         public IEnumerable<FontFamily> SystemFonts => Fonts.SystemFontFamilies.OrderBy(font => font.Source);

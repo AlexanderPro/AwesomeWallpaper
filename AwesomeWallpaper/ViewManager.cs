@@ -44,11 +44,13 @@ namespace AwesomeWallpaper
             Settings.SystemInformationRefreshInterval = settings.SystemInformationInterval == null ? null : (int?)settings.SystemInformationInterval.Value.TotalSeconds;
             Settings.SystemInformationHorizontalAlignment = settings.SystemInformationHorizontalAlignment;
             Settings.SystemInformationVerticalAlignment = settings.SystemInformationVerticalAlignment;
+            Settings.SystemInformationTransparency = settings.SystemInformationTransparency;
             Settings.ImageFileName = settings.ImageFileName;
             Settings.ImageFileName = settings.ImageFileName;
             Settings.ImageHorizontalAlignment = settings.ImageHorizontalAlignment;
             Settings.ImageVerticalAlignment = settings.ImageVerticalAlignment;
             Settings.ImageStretch = settings.ImageStretch;
+            Settings.ImageTransparency = settings.ImageTransparency;
             Settings.GalleryIntervalBetweenImages = settings.GalleryIntervalBetweenImages;
             Settings.GalleryIntervalForShowImage = settings.GalleryIntervalForShowImage;
             Settings.GalleryAutoPlay = settings.GalleryAutoPlay;
@@ -57,6 +59,7 @@ namespace AwesomeWallpaper
             Settings.GalleryHorizontalAlignment = settings.GalleryHorizontalAlignment;
             Settings.GalleryVerticalAlignment = settings.GalleryVerticalAlignment;
             Settings.GalleryStretch = settings.GalleryStretch;
+            Settings.GalleryTransparency = settings.GalleryTransparency;
             Settings.VideoFileName = settings.VideoFileName;
             Settings.VideoAutoPlay = settings.VideoAutoPlay;
             Settings.VideoRepeat = settings.VideoRepeat;
@@ -64,6 +67,7 @@ namespace AwesomeWallpaper
             Settings.VideoVerticalAlignment = settings.VideoVerticalAlignment;
             Settings.VideoStretch = settings.VideoStretch;
             Settings.VideoVolume = settings.VideoVolume;
+            Settings.VideoTransparency = settings.VideoTransparency;
 
             Update();
             CreateViews();
