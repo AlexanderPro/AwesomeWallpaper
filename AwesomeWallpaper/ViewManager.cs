@@ -297,6 +297,11 @@ namespace AwesomeWallpaper
                     MessageBox.Show($"Failed to load settings from the file {settingsFileName}{Environment.NewLine}{e.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            else
+            {
+                Settings.VideoFileExtensions = new List<string> { "*.mp4", "*.mp3", "*.mpg", "*.mpeg", "*.avi" };
+                Settings.GalleryFileExtensions = new List<string> { "*.bmp", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.tiff" };
+            }
         }
 
         private void SaveSettings()

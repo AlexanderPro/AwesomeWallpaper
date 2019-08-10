@@ -273,7 +273,7 @@ namespace AwesomeWallpaper.Settings
             set { SetProperty(ref _systemInformationTransparency, value); }
         }
 
-        private List<string> _videoFileExtensions = new List<string> { "*.mp4", "*.mp3", "*.mpg", "*.mpeg", "*.avi" };
+        private List<string> _videoFileExtensions = new List<string> {};
         [XmlArray("VideoFileExtensions")]
         [XmlArrayItem("VideoFileExtension")]
         public List<string> VideoFileExtensions
@@ -282,7 +282,7 @@ namespace AwesomeWallpaper.Settings
             set { SetProperty(ref _videoFileExtensions, value); }
         }
 
-        private List<string> _galleryFileExtensions = new List<string> { "*.bmp", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.tiff" };
+        private List<string> _galleryFileExtensions = new List<string> {};
         [XmlArray("GalleryFileExtensions")]
         [XmlArrayItem("GalleryFileExtension")]
         public List<string> GalleryFileExtensions
