@@ -11,12 +11,12 @@ AwesomeWallpaper allows you to play videos, show images or system information as
 Features
 --------------------
 
-AwesomeWallpaper can work on several monitors simultaneously and has many settings for manipulating wallpaper position, alignment, stretch and etc.
+AwesomeWallpaper can work on several monitors simultaneously and has many settings for manipulating wallpaper transparency, position, alignment, stretch and etc.
 
 Requirements
 --------------------
 
-* OS Windows 10.
+* OS Windows 10
 * .NET Framework 4.6.1
 
 Limitations
