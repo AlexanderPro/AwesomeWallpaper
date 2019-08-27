@@ -1,7 +1,7 @@
 AwesomeWallpaper
 =============
 
-AwesomeWallpaper allows you to play videos, show images or system information as your wallpaper. It supports next modes:
+AwesomeWallpaper plays videos, shows images and system information on your desktop wallpaper. It supports next modes:
 
 * **Image.** Shows an image on your desktop.
 * **Gallery.** Shows several images on your desktop.
