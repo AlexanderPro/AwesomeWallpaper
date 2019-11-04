@@ -13,6 +13,11 @@ Features
 
 AwesomeWallpaper can work on several monitors simultaneously and has many settings for manipulating wallpaper transparency, position, alignment, stretch and etc.
 
+Screenshot
+------------------
+
+![alt tag](https://user-images.githubusercontent.com/8102586/68137367-e910fe80-ff37-11e9-8e4f-6fec49c3d036.jpg)
+
 Requirements
 --------------------
 
