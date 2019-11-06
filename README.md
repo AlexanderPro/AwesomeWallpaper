@@ -1,4 +1,4 @@
-AwesomeWallpaper
+![AwesomeWallpaper](https://user-images.githubusercontent.com/8102586/68278979-875dab00-0083-11ea-9b03-3293b5101d25.png) AwesomeWallpaper
 =============
 
 AwesomeWallpaper plays videos, shows images and system information on your desktop wallpaper. It supports next modes:
