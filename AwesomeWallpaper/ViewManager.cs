@@ -103,10 +103,10 @@ namespace AwesomeWallpaper
                                     (UserControl)new GalleryView();
                     var mainWindow = new MainWindow
                     {
-                        Left = info.rcWork.Left,
-                        Top = info.rcWork.Top,
-                        Width = info.rcWork.Width,
-                        Height = info.rcWork.Height,
+                        Left = info.rcMonitor.Left,
+                        Top = info.rcMonitor.Top,
+                        Width = info.rcMonitor.Width,
+                        Height = info.rcMonitor.Height,
                         DataContext = viewModel,
                     };
                     mainWindow.GridContainer.Children.Add(view);
