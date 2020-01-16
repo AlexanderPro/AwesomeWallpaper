@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using AwesomeWallpaper.Utils;
 
 namespace AwesomeWallpaper.ViewModels
@@ -29,7 +30,7 @@ namespace AwesomeWallpaper.ViewModels
         {
             get
             {
-                return $"{AssemblyUtils.AssemblyCopyright} {AssemblyUtils.AssemblyCompany}";
+                return $"{AssemblyUtils.AssemblyCopyright} {AssemblyUtils.AssemblyCompany}- {DateTime.Now.Year}";
             }
         }
     }
