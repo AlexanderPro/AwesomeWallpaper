@@ -21,7 +21,7 @@ Screenshot
 Requirements
 --------------------
 
-* OS Windows 10
+* OS Windows 8.1, 10
 * .NET Framework 4.6.1
 
 Limitations
