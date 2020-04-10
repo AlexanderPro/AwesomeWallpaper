@@ -43,7 +43,7 @@ namespace AwesomeWallpaper.ViewModels
 
         public IEnumerable<string> Network => GetNetworks();
 
-        public IEnumerable<DriveInfoViewModel> Drives => DriveInfo.GetDrives().Select(drive => new DriveInfoViewModel(drive));
+        public IEnumerable<DriveInfoViewModel> Drives => DriveInfo.GetDrives().Where(x => x.IsReady).Select(drive => new DriveInfoViewModel(drive));
 
         public string UpdateTime => DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
 
