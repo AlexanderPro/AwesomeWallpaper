@@ -22,13 +22,6 @@ namespace AwesomeWallpaper
         {
             base.OnStartup(e);
 
-            if (Environment.OSVersion.Version.Major < 10)
-            {
-                MessageBox.Show(AssemblyUtils.AssemblyProductName + " supports only Windows 10 and later versions.", "Attention", MessageBoxButton.OK, MessageBoxImage.Warning);
-                Current.Shutdown();
-                return;
-            }
-
             _oneInstanceMutex = new Mutex(false, "AwesomeWallpaperOneInstanceMutex", out var createNew);
             if (!createNew)
             {
