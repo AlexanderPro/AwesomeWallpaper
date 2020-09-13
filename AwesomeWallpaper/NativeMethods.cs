@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
+using System.Drawing;
 
 namespace AwesomeWallpaper
 {
@@ -35,7 +36,7 @@ namespace AwesomeWallpaper
         [DllImport("user32")]
         public static extern IntPtr GetDesktopWindow();
 
-        [DllImport("psapi", SetLastError = true)]
+        [DllImport("psapi")]
         public static extern bool GetPerformanceInfo(ref PerformanceInformation pi, int size);
 
         [DllImport("kernel32")]
@@ -45,7 +46,7 @@ namespace AwesomeWallpaper
         public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 
         [DllImport("user32")]
-        public static extern IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, string lpszClass, string lpszWindow);
+        public static extern IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, string lpWindowClass, string lpWindowName);
 
         [DllImport("user32")]
         public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
@@ -61,5 +62,47 @@ namespace AwesomeWallpaper
 
         [DllImport("user32")]
         public static extern int SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessageTimeout(IntPtr hWnd, int wMsg, int wParam, int lParam, SendMessageTimeoutFlags fuFlags, uint uTimeout, out int lpdwResult);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern int SystemParametersInfo(uint uiAction, uint uiParam, string pvParam, uint fWinIni);
+
+        [DllImport("user32.dll")]
+        public static extern int GetWindowRect(IntPtr hwnd, out Rect rect);
+
+        [DllImport("user32.dll")]
+        public static extern bool SetLayeredWindowAttributes(IntPtr hwnd, uint crKey, byte bAlpha, uint dwFlags);
+
+        [DllImport("user32")]
+        public static extern int MapWindowPoints(IntPtr hWndFrom, IntPtr hWndTo, [In, Out] ref Rect rect, [MarshalAs(UnmanagedType.U4)] int cPoints);
+
+        [DllImport("user32")]
+        public static extern int MapWindowPoints(IntPtr hWndFrom, IntPtr hWndTo, [In, Out] ref Point pt, [MarshalAs(UnmanagedType.U4)] int cPoints);
+
+        [DllImport("gdi32.dll")]
+        public static extern bool BitBlt(IntPtr hObject, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hObjectSource, int nXSrc, int nYSrc, int dwRop);
+
+        [DllImport("gdi32.dll")]
+        public static extern IntPtr CreateCompatibleBitmap(IntPtr hDC, int nWidth, int nHeight);
+
+        [DllImport("gdi32.dll")]
+        public static extern IntPtr CreateCompatibleDC(IntPtr hDC);
+
+        [DllImport("gdi32.dll")]
+        public static extern bool DeleteDC(IntPtr hDC);
+
+        [DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr hObject);
+
+        [DllImport("gdi32.dll")]
+        public static extern IntPtr SelectObject(IntPtr hDC, IntPtr hObject);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetWindowDC(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr ReleaseDC(IntPtr hWnd, IntPtr hDC);
     }
 }

@@ -2,15 +2,26 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
-using AwesomeWallpaper.Utils;
+using System.Windows.Media;
+using System.Windows.Forms;
 using static AwesomeWallpaper.NativeConstants;
 using static AwesomeWallpaper.NativeMethods;
+using static AwesomeWallpaper.Utils.WindowUtils;
+using static AwesomeWallpaper.Utils.ImageUtils;
 
 namespace AwesomeWallpaper
 {
     public partial class MainWindow : Window
     {
         public bool AllowClose { get; set; } = false;
+
+        public int MonitorLeft { get; set; }
+
+        public int MonitorTop { get; set; }
+
+        public int MonitorWidth { get; set; }
+
+        public int MonitorHeight { get; set; }
 
         public MainWindow()
         {
@@ -19,9 +30,23 @@ namespace AwesomeWallpaper
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            var screens = Screen.AllScreens;
             var handle = new WindowInteropHelper(this).Handle;
-            WindowUtils.SetStyles(handle);
-            WindowUtils.ShowAlwaysOnDesktopBehindIcons(handle);
+            SetStyles(handle);
+            SendMessageToProgman();
+            var workerWHandle = GetWorkerW(handle);
+            var rect = new Rect();
+            SetWindowPos(handle, (IntPtr)1, MonitorLeft, MonitorTop, MonitorWidth, MonitorHeight, 0 | 0x0010);
+            MapWindowPoints(handle, workerWHandle, ref rect, 2);
+            SetParent(handle, workerWHandle);
+            SetWindowPos(handle, (IntPtr)1, rect.Left, rect.Top, MonitorWidth, MonitorHeight, 0 | 0x0010);
+            var imageBrush = new ImageBrush();
+            using (var image = CaptureWindow(workerWHandle, rect.Left, rect.Top, MonitorWidth, MonitorHeight))
+            {
+                imageBrush.ImageSource = ConvertImageToBitmapSource(image);
+                Background = imageBrush;
+            }
+            RefreshDesktop();
             var hwndSource = HwndSource.FromHwnd(handle);
             hwndSource.AddHook(WindowProc);
         }
@@ -29,6 +54,10 @@ namespace AwesomeWallpaper
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !AllowClose;
+            if (e.Cancel)
+            {
+                RefreshDesktop();
+            }
         }
 
         private unsafe IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

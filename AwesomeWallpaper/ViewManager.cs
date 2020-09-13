@@ -85,6 +85,8 @@ namespace AwesomeWallpaper
                 window.Hide();
             }
 
+            WindowUtils.RefreshDesktop();
+
             EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, (IntPtr hMonitor, IntPtr hdcMonitor, ref Rect rect, IntPtr data) =>
             {
                 if (Settings.Monitor == null || Settings.Monitor == windows)
@@ -103,10 +105,10 @@ namespace AwesomeWallpaper
                                     (UserControl)new GalleryView();
                     var mainWindow = new MainWindow
                     {
-                        Left = info.rcMonitor.Left,
-                        Top = info.rcMonitor.Top,
-                        Width = info.rcMonitor.Width,
-                        Height = info.rcMonitor.Height,
+                        MonitorLeft = info.rcMonitor.Left,
+                        MonitorTop = info.rcMonitor.Top,
+                        MonitorWidth = info.rcMonitor.Width,
+                        MonitorHeight = info.rcMonitor.Height,
                         DataContext = viewModel,
                     };
                     mainWindow.GridContainer.Children.Add(view);

@@ -15,9 +15,9 @@
     </UserControl.CommandBindings>
     <Grid VerticalAlignment="{Binding Settings.VideoVerticalAlignment}" HorizontalAlignment="{Binding Settings.VideoHorizontalAlignment}" MouseWheel="Grid_MouseWheel">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="0" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="0" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />

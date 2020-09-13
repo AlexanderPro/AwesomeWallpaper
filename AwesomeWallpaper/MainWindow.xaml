@@ -5,15 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AwesomeWallpaper"
         mc:Ignorable="d"
-        AllowsTransparency="True" 
         WindowStyle="None" 
-        Background="{x:Null}" 
-        IsHitTestVisible="{Binding IsHitTestVisible}" 
         ResizeMode="NoResize"
         Loaded="Window_Loaded" 
-        Closing="Window_Closing" 
-        ShowInTaskbar="False"
-        Opacity="{Binding Opacity}">
-    <Grid x:Name="GridContainer">
+        Closing="Window_Closing"
+        IsHitTestVisible="{Binding IsHitTestVisible}"
+        ShowInTaskbar="False">
+    <Grid x:Name="GridContainer" Opacity="{Binding Opacity}">
     </Grid>
 </Window>
