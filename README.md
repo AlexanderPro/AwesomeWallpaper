@@ -6,6 +6,7 @@ AwesomeWallpaper plays videos, shows images and system information on your deskt
 * **Image.** Shows an image on your desktop.
 * **Gallery.** Shows several images on your desktop.
 * **Video.** Plays a video on your desktop.
+* **Web.** Allows to view web pages, including youtube in the embed mode.
 * **System Information.** Shows system information on your desktop as Sysinternals BgInfo tool.
 
 Features
