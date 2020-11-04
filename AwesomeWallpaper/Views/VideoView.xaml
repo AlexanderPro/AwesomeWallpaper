@@ -54,7 +54,7 @@
                 <TextBlock Name="lblProgressStatus">00:00:00</TextBlock>
             </StatusBarItem>
             <StatusBarItem Grid.Column="1" HorizontalContentAlignment="Stretch">
-                <Slider Name="sliProgress" Thumb.DragStarted="sliProgress_DragStarted"  Thumb.DragCompleted="sliProgress_DragCompleted" ValueChanged="sliProgress_ValueChanged" />
+                <Slider Name="sliProgress" Thumb.DragStarted="Progress_DragStarted"  Thumb.DragCompleted="Progress_DragCompleted" ValueChanged="Progress_ValueChanged" />
             </StatusBarItem>
             <StatusBarItem Grid.Column="2">
                 <ProgressBar Name="pbVolume" Width="50" Height="12" Maximum="1" Value="{Binding ElementName=mediaPlayer, Path=Volume}" />

@@ -3,6 +3,8 @@ using System.Threading;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Threading;
+using CefSharp;
+using CefSharp.Wpf;
 using AwesomeWallpaper.Utils;
 
 namespace AwesomeWallpaper
@@ -16,6 +18,10 @@ namespace AwesomeWallpaper
         public App()
         {
             AppDomain.CurrentDomain.UnhandledException += OnCurrentDomainUnhandledException;
+
+            var settings = new CefSettings();
+            settings.CefCommandLineArgs["autoplay-policy"] = "no-user-gesture-required";
+            Cef.Initialize(settings, true, browserProcessHandler: null);
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -34,8 +40,10 @@ namespace AwesomeWallpaper
             _manager.CreateViews();
             _manager.InitTray();
 
-            _timerSystemTray = new DispatcherTimer();
-            _timerSystemTray.Interval = TimeSpan.FromSeconds(1);
+            _timerSystemTray = new DispatcherTimer()
+            {
+                Interval = TimeSpan.FromSeconds(1),
+            };
             _timerSystemTray.Tick += TimerTick;
             _timerSystemTray.Start();
         }

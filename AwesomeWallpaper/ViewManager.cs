@@ -68,6 +68,8 @@ namespace AwesomeWallpaper
             Settings.VideoStretch = settings.VideoStretch;
             Settings.VideoVolume = settings.VideoVolume;
             Settings.VideoTransparency = settings.VideoTransparency;
+            Settings.WebUrl = settings.WebUrl;
+            Settings.WebRefreshInterval = settings.WebRefreshInterval == null ? null : (int?)settings.WebRefreshInterval.Value.TotalSeconds;
 
             Update();
             CreateViews();
@@ -98,10 +100,12 @@ namespace AwesomeWallpaper
                     var viewModel = Settings.WallpaperType == WallpaperType.SystemInformation ? new SystemInformationViewModel(info, Settings) :
                                     Settings.WallpaperType == WallpaperType.Video ? new VideoViewModel(info, Settings) :
                                     Settings.WallpaperType == WallpaperType.Image ? new ImageViewModel(info, Settings) :
+                                    Settings.WallpaperType == WallpaperType.Web ? new WebViewModel(info, Settings) :
                                     (BaseViewModel)new GalleryViewModel(info, Settings);
                     var view = Settings.WallpaperType == WallpaperType.SystemInformation ? new SystemInformationView() :
                                     Settings.WallpaperType == WallpaperType.Video ? new VideoView() :
                                     Settings.WallpaperType == WallpaperType.Image ? new ImageView() :
+                                    Settings.WallpaperType == WallpaperType.Web ? new WebView() :
                                     (UserControl)new GalleryView();
                     var mainWindow = new MainWindow
                     {
@@ -197,6 +201,7 @@ namespace AwesomeWallpaper
             foreach (var view in _views)
             {
                 (view as SystemInformationView)?.Refresh();
+                (view as WebView)?.Refresh();
             }
         }
 

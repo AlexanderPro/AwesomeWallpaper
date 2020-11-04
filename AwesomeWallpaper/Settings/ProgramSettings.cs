@@ -273,6 +273,20 @@ namespace AwesomeWallpaper.Settings
             set { SetProperty(ref _systemInformationTransparency, value); }
         }
 
+        private int? _webRefreshInterval = null;
+        public int? WebRefreshInterval
+        {
+            get { return _webRefreshInterval; }
+            set { SetProperty(ref _webRefreshInterval, value); }
+        }
+
+        private string _webUrl = "";
+        public string WebUrl
+        {
+            get { return _webUrl; }
+            set { SetProperty(ref _webUrl, value); }
+        }
+
         private List<string> _videoFileExtensions = new List<string> {};
         [XmlArray("VideoFileExtensions")]
         [XmlArrayItem("VideoFileExtension")]

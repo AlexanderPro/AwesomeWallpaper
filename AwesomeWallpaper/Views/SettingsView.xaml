@@ -263,6 +263,29 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
+            <TabItem Header="Web">
+                <StackPanel>
+                    <Grid Margin="15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="12" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="12" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="URL:" Grid.Row="0" VerticalAlignment="Center" />
+                        <TextBox Grid.Row="0" Grid.Column="2" Padding="3" Text="{Binding WebUrl, Mode=TwoWay}"></TextBox>
+
+                        <TextBlock Text="Refresh Interval (H:M:S):" Grid.Row="2" VerticalAlignment="Center" />
+                        <ComboBox Grid.Row="2" Grid.Column="2" Padding="3" ItemsSource="{Binding RefreshIntervalItems}" SelectedValue="{Binding WebRefreshInterval, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+                    </Grid>
+                </StackPanel>
+            </TabItem>
         </TabControl>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="OK" Command="{Binding OKCommand}" IsDefault="True" Padding="3" Width="100" Height="30" Click="ButtonOk_Click" />

@@ -5,6 +5,7 @@
         SystemInformation = 0,
         Image = 1,
         Gallery = 2,
-        Video = 3
+        Video = 3,
+        Web = 4
     }
 }

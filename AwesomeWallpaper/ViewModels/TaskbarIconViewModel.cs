@@ -26,7 +26,9 @@ namespace AwesomeWallpaper.ViewModels
             SettingsCommand = new DelegateCommand(() =>
             {
                 var dialog = _dialogService.CreateDialog<SettingsViewModel, SettingsView>(_manager.Settings);
-                dialog.SelectedTabIndex = _manager.Settings.WallpaperType == WallpaperType.SystemInformation ? 1 : _manager.Settings.WallpaperType == WallpaperType.Image ? 2 : _manager.Settings.WallpaperType == WallpaperType.Gallery ? 3 : _manager.Settings.WallpaperType == WallpaperType.Video ? 4 : 0;
+                dialog.SelectedTabIndex = _manager.Settings.WallpaperType == WallpaperType.SystemInformation ? 1 : _manager.Settings.WallpaperType == WallpaperType.Image ? 2 : 
+                _manager.Settings.WallpaperType == WallpaperType.Gallery ? 3 : _manager.Settings.WallpaperType == WallpaperType.Video ? 4 :
+                _manager.Settings.WallpaperType == WallpaperType.Web ? 5 : 0;
                 if (dialog.ShowDialog() == true)
                 {
                     manager.ApplySettings(dialog);
@@ -104,7 +106,7 @@ namespace AwesomeWallpaper.ViewModels
         public Visibility MenuItemPauseVisibility => _settings.WallpaperType == WallpaperType.Video || _settings.WallpaperType == WallpaperType.Gallery ? Visibility.Visible : Visibility.Collapsed;
         public Visibility MenuItemStopVisibility => _settings.WallpaperType == WallpaperType.Video || _settings.WallpaperType == WallpaperType.Gallery ? Visibility.Visible : Visibility.Collapsed;
         public Visibility MenuItemSeparatorVisibility => _settings.WallpaperType == WallpaperType.Video || _settings.WallpaperType == WallpaperType.Gallery ? Visibility.Visible : Visibility.Collapsed;
-        public Visibility MenuItemRefreshVisibility => _settings.WallpaperType == WallpaperType.SystemInformation ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility MenuItemRefreshVisibility => _settings.WallpaperType == WallpaperType.SystemInformation || _settings.WallpaperType == WallpaperType.Web ? Visibility.Visible : Visibility.Collapsed;
         //public Visibility MenuItemInteractiveModeVisibility => _settings.WallpaperType == WallpaperType.Video || _settings.WallpaperType == WallpaperType.Gallery ? Visibility.Visible : Visibility.Collapsed;
         public Visibility MenuItemInteractiveModeVisibility => Visibility.Collapsed;
         public bool MenuItemPlayEnabled => (_settings.WallpaperType == WallpaperType.Video && _settings.VideoState != MediaState.Play) || (_settings.WallpaperType == WallpaperType.Gallery && _settings.GalleryState != GalleryState.Play);

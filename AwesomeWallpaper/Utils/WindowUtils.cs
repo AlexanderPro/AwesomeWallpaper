@@ -17,8 +17,7 @@ namespace AwesomeWallpaper.Utils
         public static void SendMessageToProgman()
         {
             var progmanHandle = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "Progman", null);
-            var result = 0;
-            SendMessageTimeout(progmanHandle, 0x052C, 0, 0, SendMessageTimeoutFlags.SMTO_NORMAL, 1000, out result);
+            SendMessageTimeout(progmanHandle, 0x052C, 0, 0, SendMessageTimeoutFlags.SMTO_NORMAL, 1000, out var result);
             //SendMessage(progmanHandle, 0x052C, 0, 0);
             //SendMessage(progmanHandle, 0x052C, 0x0000000D, 0);
             //SendMessage(progmanHandle, 0x052C, 0x0000000D, 1);

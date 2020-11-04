@@ -14,8 +14,10 @@ namespace AwesomeWallpaper.Views
         private void BrowseVideoFile_Click(object sender, RoutedEventArgs e)
         {
             var viewModel = (SettingsViewModel)DataContext;
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = $"Video files ({string.Join(";", viewModel.Settings.VideoFileExtensions)})|{string.Join(";", viewModel.Settings.VideoFileExtensions)}|All files (*.*)|*.*";
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = $"Video files ({string.Join(";", viewModel.Settings.VideoFileExtensions)})|{string.Join(";", viewModel.Settings.VideoFileExtensions)}|All files (*.*)|*.*"
+            };
             if (openFileDialog.ShowDialog() == true)
             {
                 viewModel.VideoFileName = openFileDialog.FileName;
@@ -35,8 +37,10 @@ namespace AwesomeWallpaper.Views
         private void BrowseImageFile_Click(object sender, RoutedEventArgs e)
         {
             var viewModel = (SettingsViewModel)DataContext;
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = $"Image files ({string.Join(";", viewModel.Settings.GalleryFileExtensions)})|{string.Join(";", viewModel.Settings.GalleryFileExtensions)}|All files (*.*)|*.*";
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = $"Image files ({string.Join(";", viewModel.Settings.GalleryFileExtensions)})|{string.Join(";", viewModel.Settings.GalleryFileExtensions)}|All files (*.*)|*.*"
+            };
             if (openFileDialog.ShowDialog() == true)
             {
                 viewModel.ImageFileName = openFileDialog.FileName;
@@ -79,6 +83,15 @@ namespace AwesomeWallpaper.Views
                 if (result == MessageBoxResult.Yes)
                 {
                     viewModel.WallpaperType = Settings.WallpaperType.Video;
+                }
+            }
+
+            if (TabControlMain.SelectedIndex == 5 && viewModel.WallpaperType != Settings.WallpaperType.Web)
+            {
+                var result = MessageBox.Show("Change wallpaper type to \"Web\"?", "Attention", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    viewModel.WallpaperType = Settings.WallpaperType.Web;
                 }
             }
         }

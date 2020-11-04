@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using AwesomeWallpaper.Extensions;
 using AwesomeWallpaper.Settings;
 using static AwesomeWallpaper.NativeMethods;
 
@@ -48,6 +47,8 @@ namespace AwesomeWallpaper.ViewModels
             VideoStretch = settings.VideoStretch;
             VideoVolume = settings.VideoVolume;
             VideoTransparency = settings.VideoTransparency;
+            WebUrl = settings.WebUrl;
+            WebRefreshInterval = settings.WebRefreshInterval == null ? (TimeSpan?)null : TimeSpan.FromSeconds(settings.WebRefreshInterval.Value);
         }
 
         private int _selectedTabIndex;
@@ -272,6 +273,20 @@ namespace AwesomeWallpaper.ViewModels
         {
             get { return _systemInformationTransparency; }
             set { SetProperty(ref _systemInformationTransparency, value); }
+        }
+
+        private TimeSpan? _webRefreshInterval;
+        public TimeSpan? WebRefreshInterval
+        {
+            get { return _webRefreshInterval; }
+            set { SetProperty(ref _webRefreshInterval, value); }
+        }
+
+        private string _webUrl = "";
+        public string WebUrl
+        {
+            get { return _webUrl; }
+            set { SetProperty(ref _webUrl, value); }
         }
 
         public IEnumerable<FontFamily> SystemFonts => Fonts.SystemFontFamilies.OrderBy(font => font.Source);

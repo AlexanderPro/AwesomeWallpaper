@@ -19,8 +19,10 @@ namespace AwesomeWallpaper.Views
         {
             InitializeComponent();
 
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
             _timer.Tick += Timer_Tick;
             _timer.Start();
         }
@@ -66,8 +68,10 @@ namespace AwesomeWallpaper.Views
         private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             var viewModel = (VideoViewModel)DataContext;
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = $"Media files ({string.Join(";", viewModel.Settings.VideoFileExtensions)})|{string.Join(";", viewModel.Settings.VideoFileExtensions)}|All files (*.*)|*.*";
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = $"Media files ({string.Join(";", viewModel.Settings.VideoFileExtensions)})|{string.Join(";", viewModel.Settings.VideoFileExtensions)}|All files (*.*)|*.*"
+            };
             if (openFileDialog.ShowDialog() == true)
             {
                 mediaPlayer.Source = new Uri(openFileDialog.FileName);
@@ -108,18 +112,18 @@ namespace AwesomeWallpaper.Views
             Stop();
         }
 
-        private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
+        private void Progress_DragStarted(object sender, DragStartedEventArgs e)
         {
             _userIsDraggingSlider = true;
         }
 
-        private void sliProgress_DragCompleted(object sender, DragCompletedEventArgs e)
+        private void Progress_DragCompleted(object sender, DragCompletedEventArgs e)
         {
             _userIsDraggingSlider = false;
             mediaPlayer.Position = TimeSpan.FromSeconds(sliProgress.Value);
         }
 
-        private void sliProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void Progress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             lblProgressStatus.Text = TimeSpan.FromSeconds(sliProgress.Value).ToString(@"hh\:mm\:ss");
         }

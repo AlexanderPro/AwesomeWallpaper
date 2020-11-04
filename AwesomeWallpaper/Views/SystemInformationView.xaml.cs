@@ -19,9 +19,11 @@ namespace AwesomeWallpaper.Views
             var viewModel = DataContext as BaseViewModel;
             if (_timer == null && viewModel != null)
             {
-                _timer = new DispatcherTimer();
-                _timer.Interval = viewModel.Settings.SystemInformationRefreshInterval.HasValue ? TimeSpan.FromSeconds(viewModel.Settings.SystemInformationRefreshInterval.Value) : TimeSpan.FromMilliseconds(int.MaxValue);
-                _timer.Tick += timer_Tick;
+                _timer = new DispatcherTimer
+                {
+                    Interval = viewModel.Settings.SystemInformationRefreshInterval.HasValue ? TimeSpan.FromSeconds(viewModel.Settings.SystemInformationRefreshInterval.Value) : TimeSpan.FromMilliseconds(int.MaxValue)
+                };
+                _timer.Tick += Timer_Tick;
                 if (viewModel.Settings.SystemInformationRefreshInterval.HasValue)
                 {
                     _timer.Start();
@@ -29,7 +31,7 @@ namespace AwesomeWallpaper.Views
             }
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             (DataContext as BaseViewModel)?.Refresh();
         }
