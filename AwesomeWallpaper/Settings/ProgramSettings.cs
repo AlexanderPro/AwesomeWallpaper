@@ -287,6 +287,62 @@ namespace AwesomeWallpaper.Settings
             set { SetProperty(ref _webUrl, value); }
         }
 
+        private IntPtr _windowHandle = IntPtr.Zero;
+        public IntPtr WindowHandle
+        {
+            get { return _windowHandle; }
+            set { SetProperty(ref _windowHandle, value); }
+        }
+
+        private string _windowText = "";
+        public string WindowText
+        {
+            get { return _windowText; }
+            set { SetProperty(ref _windowText, value); }
+        }
+
+        private string _windowClassName = "";
+        public string WindowClassName
+        {
+            get { return _windowClassName; }
+            set { SetProperty(ref _windowClassName, value); }
+        }
+
+        private string _windowProcessName = "";
+        public string WindowProcessName
+        {
+            get { return _windowProcessName; }
+            set { SetProperty(ref _windowProcessName, value); }
+        }
+
+        private HorizontalAlignment _windowHorizontalAlignment = HorizontalAlignment.Center;
+        public HorizontalAlignment WindowHorizontalAlignment
+        {
+            get { return _windowHorizontalAlignment; }
+            set { SetProperty(ref _windowHorizontalAlignment, value); }
+        }
+
+        private VerticalAlignment _windowVerticalAlignment = VerticalAlignment.Center;
+        public VerticalAlignment WindowVerticalAlignment
+        {
+            get { return _windowVerticalAlignment; }
+            set { SetProperty(ref _windowVerticalAlignment, value); }
+        }
+
+        private bool _windowFullScreen = true;
+        public bool WindowFullScreen
+        {
+            get { return _windowFullScreen; }
+            set { SetProperty(ref _windowFullScreen, value); }
+        }
+
+        private bool _windowUseAfterRestart = true;
+        public bool WindowUseAfterRestart
+        {
+            get { return _windowUseAfterRestart; }
+            set { SetProperty(ref _windowUseAfterRestart, value); }
+        }
+
         private List<string> _videoFileExtensions = new List<string> {};
         [XmlArray("VideoFileExtensions")]
         [XmlArrayItem("VideoFileExtension")]

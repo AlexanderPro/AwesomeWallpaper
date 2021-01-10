@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Drawing;
-using static AwesomeWallpaper.NativeConstants;
-using static AwesomeWallpaper.NativeMethods;
+using System.Text;
+using System.Diagnostics;
+using AwesomeWallpaper.Native;
+using static AwesomeWallpaper.Native.NativeConstants;
+using static AwesomeWallpaper.Native.NativeMethods;
 
 
 namespace AwesomeWallpaper.Utils
@@ -100,6 +103,34 @@ namespace AwesomeWallpaper.Utils
             // free up the Bitmap object
             DeleteObject(hBitmap);
             return image;
+        }
+
+        public static string GetWmGetText(IntPtr hwnd)
+        {
+            var titleSize = SendMessage(hwnd, WM_GETTEXTLENGTH, 0, 0);
+            if (titleSize == 0)
+            {
+                return string.Empty;
+            }
+
+            var title = new StringBuilder(titleSize + 1);
+            SendMessage(hwnd, WM_GETTEXT, title.Capacity, title);
+            return title.ToString();
+        }
+
+        public static string GetProcessName(IntPtr hwnd)
+        {
+            try
+            {
+                int processId;
+                GetWindowThreadProcessId(hwnd, out processId);
+                var process = Process.GetProcessById(processId);
+                return process.MainModule.FileName;
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
     }
 }

@@ -4,8 +4,10 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Forms;
-using static AwesomeWallpaper.NativeConstants;
-using static AwesomeWallpaper.NativeMethods;
+using AwesomeWallpaper.Settings;
+using AwesomeWallpaper.Native;
+using static AwesomeWallpaper.Native.NativeConstants;
+using static AwesomeWallpaper.Native.NativeMethods;
 using static AwesomeWallpaper.Utils.WindowUtils;
 using static AwesomeWallpaper.Utils.ImageUtils;
 
@@ -15,40 +17,54 @@ namespace AwesomeWallpaper
     {
         public bool AllowClose { get; set; } = false;
 
-        public int MonitorLeft { get; set; }
+        public Native.Rect MonitorRect { get; private set; }
 
-        public int MonitorTop { get; set; }
+        public IntPtr WindowHandle { get; private set; }
 
-        public int MonitorWidth { get; set; }
+        public ProgramSettings Settings { get; private set; }
 
-        public int MonitorHeight { get; set; }
-
-        public MainWindow()
+        public MainWindow(ProgramSettings settings, Native.Rect monitorRect, IntPtr windowHandle)
         {
             InitializeComponent();
+            Settings = settings;
+            MonitorRect = monitorRect;
+            WindowHandle = windowHandle;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var screens = Screen.AllScreens;
-            var handle = new WindowInteropHelper(this).Handle;
+            var handle = Settings.WallpaperType == WallpaperType.Window ? WindowHandle : new WindowInteropHelper(this).Handle;            
             SetStyles(handle);
             SendMessageToProgman();
             var workerWHandle = GetWorkerW(handle);
-            var rect = new Rect();
-            SetWindowPos(handle, (IntPtr)1, MonitorLeft, MonitorTop, MonitorWidth, MonitorHeight, 0 | 0x0010);
-            MapWindowPoints(handle, workerWHandle, ref rect, 2);
-            SetParent(handle, workerWHandle);
-            SetWindowPos(handle, (IntPtr)1, rect.Left, rect.Top, MonitorWidth, MonitorHeight, 0 | 0x0010);
-            var imageBrush = new ImageBrush();
-            using (var image = CaptureWindow(workerWHandle, rect.Left, rect.Top, MonitorWidth, MonitorHeight))
+            var rect = new Native.Rect();
+            if (Settings.WallpaperType == WallpaperType.Window)
             {
-                imageBrush.ImageSource = ConvertImageToBitmapSource(image);
-                Background = imageBrush;
+                Hide();
+                if (Settings.WindowFullScreen)
+                {
+                    SetWindowPos(handle, (IntPtr)1, MonitorRect.Left, MonitorRect.Top, MonitorRect.Width, MonitorRect.Height, 0 | 0x0010);
+                }
+                SetParent(handle, workerWHandle);
+                RefreshDesktop();
             }
-            RefreshDesktop();
-            var hwndSource = HwndSource.FromHwnd(handle);
-            hwndSource.AddHook(WindowProc);
+            else
+            {
+                SetWindowPos(handle, (IntPtr)1, MonitorRect.Left, MonitorRect.Top, MonitorRect.Width, MonitorRect.Height, 0 | 0x0010);
+                MapWindowPoints(handle, workerWHandle, ref rect, 2);
+                SetParent(handle, workerWHandle);
+                SetWindowPos(handle, (IntPtr)1, rect.Left, rect.Top, MonitorRect.Width, MonitorRect.Height, 0 | 0x0010);
+                var imageBrush = new ImageBrush();
+                using (var image = CaptureWindow(workerWHandle, rect.Left, rect.Top, MonitorRect.Width, MonitorRect.Height))
+                {
+                    imageBrush.ImageSource = ConvertImageToBitmapSource(image);
+                    Background = imageBrush;
+                }
+                RefreshDesktop();
+                var hwndSource = HwndSource.FromHwnd(handle);
+                hwndSource.AddHook(WindowProc);
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -73,7 +89,7 @@ namespace AwesomeWallpaper
             if (msg == WM_DPICHANGED)
             {
                 var handle = new WindowInteropHelper(this).Handle;
-                var rc = (Rect*)lParam.ToPointer();
+                var rc = (Native.Rect*)lParam.ToPointer();
                 SetWindowPos(handle, IntPtr.Zero, 0, 0, rc->Right, rc->Left, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER);
                 handled = true;
             }

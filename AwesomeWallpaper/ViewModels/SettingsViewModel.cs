@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using AwesomeWallpaper.Settings;
-using static AwesomeWallpaper.NativeMethods;
+using static AwesomeWallpaper.Native.NativeMethods;
 
 namespace AwesomeWallpaper.ViewModels
 {
@@ -289,6 +289,62 @@ namespace AwesomeWallpaper.ViewModels
             set { SetProperty(ref _webUrl, value); }
         }
 
+        private IntPtr _windowHandle = IntPtr.Zero;
+        public IntPtr WindowHandle
+        {
+            get { return _windowHandle; }
+            set { SetProperty(ref _windowHandle, value); }
+        }
+
+        private string _windowText = "";
+        public string WindowText
+        {
+            get { return _windowText; }
+            set { SetProperty(ref _windowText, value); }
+        }
+
+        private string _windowClassName = "";
+        public string WindowClassName
+        {
+            get { return _windowClassName; }
+            set { SetProperty(ref _windowClassName, value); }
+        }
+
+        private string _windowProcessName = "";
+        public string WindowProcessName
+        {
+            get { return _windowProcessName; }
+            set { SetProperty(ref _windowProcessName, value); }
+        }
+
+        private HorizontalAlignment _windowHorizontalAlignment = HorizontalAlignment.Center;
+        public HorizontalAlignment WindowHorizontalAlignment
+        {
+            get { return _windowHorizontalAlignment; }
+            set { SetProperty(ref _windowHorizontalAlignment, value); }
+        }
+
+        private VerticalAlignment _windowVerticalAlignment = VerticalAlignment.Center;
+        public VerticalAlignment WindowVerticalAlignment
+        {
+            get { return _windowVerticalAlignment; }
+            set { SetProperty(ref _windowVerticalAlignment, value); }
+        }
+
+        private bool _windowFullScreen = true;
+        public bool WindowFullScreen
+        {
+            get { return _windowFullScreen; }
+            set { SetProperty(ref _windowFullScreen, value); }
+        }
+
+        private bool _windowUseAfterRestart = true;
+        public bool WindowUseAfterRestart
+        {
+            get { return _windowUseAfterRestart; }
+            set { SetProperty(ref _windowUseAfterRestart, value); }
+        }
+
         public IEnumerable<FontFamily> SystemFonts => Fonts.SystemFontFamilies.OrderBy(font => font.Source);
 
         public IEnumerable<int> FontSizes => new[] { 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40 };
@@ -304,7 +360,7 @@ namespace AwesomeWallpaper.ViewModels
             {
                 var monitors = new List<KeyValuePair<int?, string>>() { new KeyValuePair<int?, string>(null, "All") };
                 var monitor = 0;
-                EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, (IntPtr hMonitor, IntPtr hdcMonitor, ref Rect rect, IntPtr data) =>
+                EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, (IntPtr hMonitor, IntPtr hdcMonitor, ref Native.Rect rect, IntPtr data) =>
                 {
                     monitors.Add(new KeyValuePair<int?, string>(monitor, (monitor + 1).ToString()));
                     monitor++;

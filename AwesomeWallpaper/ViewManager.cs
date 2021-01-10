@@ -3,17 +3,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Media;
 using System.Windows.Interop;
 using System.Linq;
 using System.IO;
 using System.Text;
 using Hardcodet.Wpf.TaskbarNotification;
+using AwesomeWallpaper.Native;
 using AwesomeWallpaper.Utils;
 using AwesomeWallpaper.ViewModels;
 using AwesomeWallpaper.Views;
 using AwesomeWallpaper.Settings;
-using static AwesomeWallpaper.NativeMethods;
+using static AwesomeWallpaper.Native.NativeMethods;
 
 namespace AwesomeWallpaper
 {
@@ -70,6 +70,14 @@ namespace AwesomeWallpaper
             Settings.VideoTransparency = settings.VideoTransparency;
             Settings.WebUrl = settings.WebUrl;
             Settings.WebRefreshInterval = settings.WebRefreshInterval == null ? null : (int?)settings.WebRefreshInterval.Value.TotalSeconds;
+            Settings.WindowHandle = settings.WindowHandle;
+            Settings.WindowText = settings.WindowText;
+            Settings.WindowClassName = settings.WindowClassName;
+            Settings.WindowProcessName = settings.WindowProcessName;
+            Settings.WindowHorizontalAlignment = settings.WindowHorizontalAlignment;
+            Settings.WindowVerticalAlignment = settings.WindowVerticalAlignment;
+            Settings.WindowFullScreen = settings.WindowFullScreen;
+            Settings.WindowUseAfterRestart = settings.WindowUseAfterRestart;
 
             Update();
             CreateViews();
@@ -89,7 +97,7 @@ namespace AwesomeWallpaper
 
             WindowUtils.RefreshDesktop();
 
-            EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, (IntPtr hMonitor, IntPtr hdcMonitor, ref Rect rect, IntPtr data) =>
+            EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, (IntPtr hMonitor, IntPtr hdcMonitor, ref Native.Rect rect, IntPtr data) =>
             {
                 if (Settings.Monitor == null || Settings.Monitor == windows)
                 {
@@ -107,12 +115,8 @@ namespace AwesomeWallpaper
                                     Settings.WallpaperType == WallpaperType.Image ? new ImageView() :
                                     Settings.WallpaperType == WallpaperType.Web ? new WebView() :
                                     (UserControl)new GalleryView();
-                    var mainWindow = new MainWindow
+                    var mainWindow = new MainWindow (Settings, info.rcMonitor, IntPtr.Zero)
                     {
-                        MonitorLeft = info.rcMonitor.Left,
-                        MonitorTop = info.rcMonitor.Top,
-                        MonitorWidth = info.rcMonitor.Width,
-                        MonitorHeight = info.rcMonitor.Height,
                         DataContext = viewModel,
                     };
                     mainWindow.GridContainer.Children.Add(view);

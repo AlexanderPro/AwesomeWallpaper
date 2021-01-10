@@ -4,7 +4,7 @@ using System.Security;
 using System.Text;
 using System.Drawing;
 
-namespace AwesomeWallpaper
+namespace AwesomeWallpaper.Native
 {
     [SuppressUnmanagedCodeSecurity]
     static class NativeMethods
@@ -32,6 +32,12 @@ namespace AwesomeWallpaper
 
         [DllImport("user32")]
         public static extern int GetWindowLong(IntPtr hWnd, int index);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr processId);
 
         [DllImport("user32")]
         public static extern IntPtr GetDesktopWindow();
@@ -62,6 +68,9 @@ namespace AwesomeWallpaper
 
         [DllImport("user32")]
         public static extern int SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern bool SendMessage(IntPtr hWnd, uint Msg, int wParam, StringBuilder lParam);
 
         [DllImport("user32.dll")]
         public static extern int SendMessageTimeout(IntPtr hWnd, int wMsg, int wParam, int lParam, SendMessageTimeoutFlags fuFlags, uint uTimeout, out int lpdwResult);

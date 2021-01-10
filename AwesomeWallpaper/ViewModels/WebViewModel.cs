@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using AwesomeWallpaper.Native;
 using AwesomeWallpaper.Settings;
 
 namespace AwesomeWallpaper.ViewModels

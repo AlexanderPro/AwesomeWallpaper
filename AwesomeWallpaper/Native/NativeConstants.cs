@@ -1,4 +1,4 @@
-﻿namespace AwesomeWallpaper
+﻿namespace AwesomeWallpaper.Native
 {
     static class NativeConstants
     {
@@ -16,5 +16,7 @@
         public const uint SPIF_UPDATEINIFILE = 0x1;
         public const uint SPI_SETCLIENTAREAANIMATION = 0x1043;
         public const int SRCCOPY = 0x00CC0020;
+        public const int WM_GETTEXT = 0x000D;
+        public const int WM_GETTEXTLENGTH = 0x000E;
     }
 }

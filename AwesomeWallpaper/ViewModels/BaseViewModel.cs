@@ -1,4 +1,5 @@
 ﻿using Prism.Mvvm;
+using AwesomeWallpaper.Native;
 using AwesomeWallpaper.Settings;
 
 namespace AwesomeWallpaper.ViewModels

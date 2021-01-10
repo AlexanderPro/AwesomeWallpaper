@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net.NetworkInformation;
 using System.IO;
-using static AwesomeWallpaper.NativeMethods;
+using AwesomeWallpaper.Native;
+using static AwesomeWallpaper.Native.NativeMethods;
 
 namespace AwesomeWallpaper.Utils
 {
