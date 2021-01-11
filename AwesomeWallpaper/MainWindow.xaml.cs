@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Forms;
+using System.Threading;
 using AwesomeWallpaper.Settings;
 using AwesomeWallpaper.Native;
 using static AwesomeWallpaper.Native.NativeConstants;
@@ -72,6 +73,11 @@ namespace AwesomeWallpaper
             e.Cancel = !AllowClose;
             if (e.Cancel)
             {
+                if (Settings.WallpaperType == WallpaperType.Window && WindowHandle != null && WindowHandle != IntPtr.Zero)
+                {
+                    SendMessage(WindowHandle, WM_CLOSE, 0, 0);
+                    Thread.Sleep(500);
+                }
                 RefreshDesktop();
             }
         }

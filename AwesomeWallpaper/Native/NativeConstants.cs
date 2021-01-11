@@ -18,5 +18,6 @@
         public const int SRCCOPY = 0x00CC0020;
         public const int WM_GETTEXT = 0x000D;
         public const int WM_GETTEXTLENGTH = 0x000E;
+        public const int WM_CLOSE = 0x0010;
     }
 }

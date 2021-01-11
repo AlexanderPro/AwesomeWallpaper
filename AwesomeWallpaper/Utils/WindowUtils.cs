@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Text;
 using System.Diagnostics;
 using AwesomeWallpaper.Native;
@@ -118,6 +119,14 @@ namespace AwesomeWallpaper.Utils
             return title.ToString();
         }
 
+        public static string GetClassName(IntPtr hwnd)
+        {
+            var builder = new StringBuilder(1024);
+            NativeMethods.GetClassName(hwnd, builder, builder.Capacity);
+            var className = builder.ToString();
+            return className;
+        }
+
         public static string GetProcessName(IntPtr hwnd)
         {
             try
@@ -131,6 +140,20 @@ namespace AwesomeWallpaper.Utils
             {
                 return string.Empty;
             }
+        }
+
+        public static Bitmap PrintWindow(IntPtr hwnd)
+        {
+            Rect rect;
+            GetWindowRect(hwnd, out rect);
+            var bitmap = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
+            using (var graphics = Graphics.FromImage(bitmap))
+            {
+                var hdc = graphics.GetHdc();
+                NativeMethods.PrintWindow(hwnd, hdc, 0);
+                graphics.ReleaseHdc(hdc);
+            }
+            return bitmap;
         }
     }
 }

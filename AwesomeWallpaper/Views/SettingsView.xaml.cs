@@ -1,14 +1,18 @@
 ﻿using System.Windows;
 using Microsoft.Win32;
 using AwesomeWallpaper.ViewModels;
+using static AwesomeWallpaper.Native.NativeMethods;
 
 namespace AwesomeWallpaper.Views
 {
     public partial class SettingsView : Window
     {
+        private bool _isButtonTargetMouseDown;
+
         public SettingsView()
         {
             InitializeComponent();
+            _isButtonTargetMouseDown = false;
         }
 
         private void BrowseVideoFile_Click(object sender, RoutedEventArgs e)
@@ -93,6 +97,31 @@ namespace AwesomeWallpaper.Views
                 {
                     viewModel.WallpaperType = Settings.WallpaperType.Web;
                 }
+            }
+        }
+
+        private void TargetButton_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (!_isButtonTargetMouseDown)
+            {
+                _isButtonTargetMouseDown = true;
+            }
+        }
+
+        private void TargetButton_MouseDownUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (_isButtonTargetMouseDown)
+            {
+                _isButtonTargetMouseDown = false;
+                SetCursor(System.Windows.Forms.Cursors.Default.Handle);
+            }
+        }
+
+        private void TargetButton_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (_isButtonTargetMouseDown)
+            {
+                SetCursor(Properties.Resources.Target32.Handle);
             }
         }
     }

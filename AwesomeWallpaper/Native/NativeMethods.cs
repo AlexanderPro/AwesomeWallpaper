@@ -113,5 +113,12 @@ namespace AwesomeWallpaper.Native
 
         [DllImport("user32.dll")]
         public static extern IntPtr ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool PrintWindow(IntPtr hWnd, IntPtr hdc, int nFlags);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetCursor(IntPtr hWnd);
     }
 }

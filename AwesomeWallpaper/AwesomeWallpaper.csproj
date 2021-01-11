@@ -261,6 +261,15 @@
   <ItemGroup>
     <Resource Include="Images\1x1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Target.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Target.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Target32.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rd /s /q "de" "en" "es" "fr" "hu" "it" "ja" "ko" "pr-br" "ro" "pt-br" "ru" "sv" "zh-hans" "zh-hant"</PostBuildEvent>
