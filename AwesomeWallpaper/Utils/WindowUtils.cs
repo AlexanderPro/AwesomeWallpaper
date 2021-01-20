@@ -155,5 +155,16 @@ namespace AwesomeWallpaper.Utils
             }
             return bitmap;
         }
+
+        public static IntPtr GetParentWindow(IntPtr hwnd)
+        {
+            var resultHwnd = hwnd;
+            var parentHwnd = IntPtr.Zero;
+            while ((parentHwnd = GetParent(resultHwnd)) != IntPtr.Zero)
+            {
+                resultHwnd = parentHwnd;
+            }
+            return resultHwnd;
+        }
     }
 }

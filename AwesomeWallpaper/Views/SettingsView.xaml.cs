@@ -1,6 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using AwesomeWallpaper.ViewModels;
+using AwesomeWallpaper.Utils;
 using static AwesomeWallpaper.Native.NativeMethods;
 
 namespace AwesomeWallpaper.Views
@@ -121,7 +126,34 @@ namespace AwesomeWallpaper.Views
         {
             if (_isButtonTargetMouseDown)
             {
-                SetCursor(Properties.Resources.Target32.Handle);
+                try
+                {
+                    SetCursor(Properties.Resources.Target32.Handle);
+                    var cursorPosition = System.Windows.Forms.Cursor.Position;
+                    var handle = WindowFromPoint(new System.Drawing.Point(cursorPosition.X, cursorPosition.Y));
+                    var viewModel = (SettingsViewModel)DataContext;
+                    handle = WindowUtils.GetParentWindow(handle);
+                    var thisWindowHandle = new WindowInteropHelper(this).Handle;
+                    if (thisWindowHandle == handle)
+                    {
+                        viewModel.WindowHandleText = "";
+                        viewModel.WindowText = "";
+                        WindowImage.Source = new BitmapImage(new Uri("pack://application:,,,/Images/1x1.png"));
+                    }
+                    else
+                    {
+                        var windowHandleText = string.Format("0x{0:X}", handle.ToInt64());
+                        viewModel.WindowHandleText = windowHandleText;
+                        var windowTitle = WindowUtils.GetWmGetText(handle);
+                        viewModel.WindowText = windowTitle;
+                        var windowImage = WindowUtils.PrintWindow(handle);
+                        WindowImage.Source = ImageUtils.ConvertImageToBitmapSource(windowImage);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
     }

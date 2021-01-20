@@ -296,6 +296,13 @@ namespace AwesomeWallpaper.ViewModels
             set { SetProperty(ref _windowHandle, value); }
         }
 
+        private string _windowHandleText = "";
+        public string WindowHandleText
+        {
+            get { return _windowHandleText; }
+            set { SetProperty(ref _windowHandleText, value); }
+        }
+
         private string _windowText = "";
         public string WindowText
         {

@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen"
         Title="Settings" 
         SizeToContent="WidthAndHeight">
-    <Grid Width="450" Height="450">
+    <Grid Width="450" Height="410">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="65" />
@@ -300,17 +300,15 @@
                             <RowDefinition Height="25" />
                             <RowDefinition Height="12" />
                             <RowDefinition Height="25" />
-                            <RowDefinition Height="12" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="12" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="12" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="12" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="12" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="12" />
+                            <RowDefinition Height="0" />
+                            <RowDefinition Height="0" />
+                            <RowDefinition Height="0" />
+                            <RowDefinition Height="0" />
+                            <RowDefinition Height="0" />
+                            <RowDefinition Height="0" />
+                            <RowDefinition Height="0" />
+                            <RowDefinition Height="0" />
+                            <RowDefinition Height="0" />
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Find Window:" Grid.Row="0" VerticalAlignment="Center" />
@@ -321,26 +319,33 @@
                             </StackPanel>
                         </Button>
 
-                        <TextBlock Text="Handle:" Grid.Row="2" VerticalAlignment="Center" />
-                        <TextBox Grid.Row="2" Grid.Column="2" Padding="3" Text="{Binding WindowHandle, Mode=TwoWay}" IsEnabled="False"></TextBox>
+                        <TextBlock Text="Window Handle:" Grid.Row="2" VerticalAlignment="Center" />
+                        <TextBox Grid.Row="2" Grid.Column="2" Padding="3" Text="{Binding WindowHandleText, Mode=TwoWay}" IsReadOnly="True"></TextBox>
 
-                        <TextBlock Text="Text:" Grid.Row="4" VerticalAlignment="Center" />
-                        <TextBox Grid.Row="4" Grid.Column="2" Padding="3" Text="{Binding WindowText, Mode=TwoWay}" IsEnabled="False"></TextBox>
+                        <TextBlock Text="Window Title:" Grid.Row="4" VerticalAlignment="Center" />
+                        <TextBox Grid.Row="4" Grid.Column="2" Padding="3" Text="{Binding WindowText, Mode=TwoWay}" IsReadOnly="True"></TextBox>
 
-                        <TextBlock Text="Process Name:" Grid.Row="6" VerticalAlignment="Center" />
-                        <TextBox Grid.Row="6" Grid.Column="2" Padding="3" Text="{Binding WindowProcessName, Mode=TwoWay}" IsEnabled="False"></TextBox>
+                        <TextBlock Text="Horizontal Alignment:" Grid.Row="6" VerticalAlignment="Center" />
+                        <ComboBox Grid.Row="6" Grid.Column="2" Padding="3" ItemsSource="{Binding HorizontalAlignments}" SelectedValue="{Binding WindowHorizontalAlignment, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
 
-                        <TextBlock Text="Horizontal Alignment:" Grid.Row="8" VerticalAlignment="Center" />
-                        <ComboBox Grid.Row="8" Grid.Column="2" Padding="3" ItemsSource="{Binding HorizontalAlignments}" SelectedValue="{Binding WindowHorizontalAlignment, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+                        <TextBlock Text="Vertical Alignment:" Grid.Row="8" VerticalAlignment="Center" />
+                        <ComboBox Grid.Row="8" Grid.Column="2" Padding="3" ItemsSource="{Binding VerticalAlignments}" SelectedValue="{Binding WindowVerticalAlignment, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
 
-                        <TextBlock Text="Vertical Alignment:" Grid.Row="10" VerticalAlignment="Center" />
-                        <ComboBox Grid.Row="10" Grid.Column="2" Padding="3" ItemsSource="{Binding VerticalAlignments}" SelectedValue="{Binding WindowVerticalAlignment, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+                        <TextBlock Text="Full Screen:" Grid.Row="10" VerticalAlignment="Center" />
+                        <ComboBox Grid.Row="10" Grid.Column="2" Padding="3" ItemsSource="{Binding TrueFalseItems}" SelectedValue="{Binding WindowFullScreen, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
 
-                        <TextBlock Text="Full Screen:" Grid.Row="12" VerticalAlignment="Center" />
-                        <ComboBox Grid.Row="12" Grid.Column="2" Padding="3" ItemsSource="{Binding TrueFalseItems}" SelectedValue="{Binding WindowFullScreen, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+                        <TextBlock Text="Use After Restart:" Grid.Row="12" VerticalAlignment="Center" />
+                        <ComboBox Grid.Row="12" Grid.Column="2" Padding="3" ItemsSource="{Binding TrueFalseItems}" SelectedValue="{Binding WindowUseAfterRestart, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="155" />
+                        </Grid.RowDefinitions>
 
-                        <TextBlock Text="Use After Restart:" Grid.Row="14" VerticalAlignment="Center" />
-                        <ComboBox Grid.Row="14" Grid.Column="2" Padding="3" ItemsSource="{Binding TrueFalseItems}" SelectedValue="{Binding WindowUseAfterRestart, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+                        <Image Grid.Row="1" Grid.Column="1" x:Name="WindowImage" Stretch="Fill"></Image>
                     </Grid>
                 </StackPanel>
             </TabItem>

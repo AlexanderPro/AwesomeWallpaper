@@ -75,6 +75,9 @@ namespace AwesomeWallpaper.Native
         [DllImport("user32.dll")]
         public static extern int SendMessageTimeout(IntPtr hWnd, int wMsg, int wParam, int lParam, SendMessageTimeoutFlags fuFlags, uint uTimeout, out int lpdwResult);
 
+        [DllImport("user32")]
+        public static extern int PostMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern int SystemParametersInfo(uint uiAction, uint uiParam, string pvParam, uint fWinIni);
 
@@ -120,5 +123,11 @@ namespace AwesomeWallpaper.Native
 
         [DllImport("user32.dll")]
         public static extern IntPtr SetCursor(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr WindowFromPoint(Point p);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetParent(IntPtr hWnd);
     }
 }

@@ -75,8 +75,8 @@ namespace AwesomeWallpaper
             {
                 if (Settings.WallpaperType == WallpaperType.Window && WindowHandle != null && WindowHandle != IntPtr.Zero)
                 {
-                    SendMessage(WindowHandle, WM_CLOSE, 0, 0);
-                    Thread.Sleep(500);
+                    PostMessage(WindowHandle, WM_CLOSE, 0, 0);
+                    Thread.Sleep(1000);
                 }
                 RefreshDesktop();
             }
