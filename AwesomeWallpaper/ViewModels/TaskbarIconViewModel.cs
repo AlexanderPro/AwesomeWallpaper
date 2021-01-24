@@ -26,9 +26,12 @@ namespace AwesomeWallpaper.ViewModels
             SettingsCommand = new DelegateCommand(() =>
             {
                 var dialog = _dialogService.CreateDialog<SettingsViewModel, SettingsView>(_manager.Settings);
-                dialog.SelectedTabIndex = _manager.Settings.WallpaperType == WallpaperType.SystemInformation ? 1 : _manager.Settings.WallpaperType == WallpaperType.Image ? 2 : 
-                _manager.Settings.WallpaperType == WallpaperType.Gallery ? 3 : _manager.Settings.WallpaperType == WallpaperType.Video ? 4 :
-                _manager.Settings.WallpaperType == WallpaperType.Web ? 5 : 0;
+                dialog.SelectedTabIndex = _manager.Settings.WallpaperType == WallpaperType.SystemInformation ? 1 : 
+                _manager.Settings.WallpaperType == WallpaperType.Image ? 2 : 
+                _manager.Settings.WallpaperType == WallpaperType.Gallery ? 3 : 
+                _manager.Settings.WallpaperType == WallpaperType.Video ? 4 :
+                _manager.Settings.WallpaperType == WallpaperType.Web ? 5 :
+                _manager.Settings.WallpaperType == WallpaperType.Window ? 6 : 0;
                 if (dialog.ShowDialog() == true)
                 {
                     manager.ApplySettings(dialog);

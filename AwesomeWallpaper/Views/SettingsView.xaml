@@ -300,15 +300,15 @@
                             <RowDefinition Height="25" />
                             <RowDefinition Height="12" />
                             <RowDefinition Height="25" />
-                            <RowDefinition Height="0" />
-                            <RowDefinition Height="0" />
-                            <RowDefinition Height="0" />
-                            <RowDefinition Height="0" />
-                            <RowDefinition Height="0" />
-                            <RowDefinition Height="0" />
-                            <RowDefinition Height="0" />
-                            <RowDefinition Height="0" />
-                            <RowDefinition Height="0" />
+                            <RowDefinition Height="{Binding AnyWindowDelimiterRowHeight}" />
+                            <RowDefinition Height="{Binding AnyWindowRowHeight}" />
+                            <RowDefinition Height="{Binding AnyWindowDelimiterRowHeight}" />
+                            <RowDefinition Height="{Binding AnyWindowRowHeight}" />
+                            <RowDefinition Height="{Binding AnyWindowDelimiterRowHeight}" />
+                            <RowDefinition Height="{Binding AnyWindowRowHeight}" />
+                            <RowDefinition Height="{Binding AnyWindowDelimiterRowHeight}" />
+                            <RowDefinition Height="{Binding AnyWindowRowHeight}" />
+                            <RowDefinition Height="{Binding AnyWindowDelimiterRowHeight}" />
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Find Window:" Grid.Row="0" VerticalAlignment="Center" />
@@ -319,8 +319,8 @@
                             </StackPanel>
                         </Button>
 
-                        <TextBlock Text="Window Handle:" Grid.Row="2" VerticalAlignment="Center" />
-                        <TextBox Grid.Row="2" Grid.Column="2" Padding="3" Text="{Binding WindowHandleText, Mode=TwoWay}" IsReadOnly="True"></TextBox>
+                        <TextBlock Text="Window Status:" Grid.Row="2" VerticalAlignment="Center" />
+                        <TextBox Grid.Row="2" Grid.Column="2" Padding="3" Text="{Binding WindowStatus, Mode=TwoWay}" IsReadOnly="True"></TextBox>
 
                         <TextBlock Text="Window Title:" Grid.Row="4" VerticalAlignment="Center" />
                         <TextBox Grid.Row="4" Grid.Column="2" Padding="3" Text="{Binding WindowText, Mode=TwoWay}" IsReadOnly="True"></TextBox>
@@ -339,13 +339,15 @@
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="155" />
+                            <RowDefinition Height="{Binding AnyWindowImageRowHeight}" />
                         </Grid.RowDefinitions>
 
-                        <Image Grid.Row="1" Grid.Column="1" x:Name="WindowImage" Stretch="Fill"></Image>
+                        <Border Grid.Row="1" Grid.Column="1" Background="Gray">
+                            <Image x:Name="WindowImage" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
+                        </Border>
                     </Grid>
                 </StackPanel>
             </TabItem>

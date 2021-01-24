@@ -42,6 +42,9 @@ namespace AwesomeWallpaper.Native
         [DllImport("user32")]
         public static extern IntPtr GetDesktopWindow();
 
+        [DllImport("user32")]
+        public static extern IntPtr GetShellWindow();
+
         [DllImport("psapi")]
         public static extern bool GetPerformanceInfo(ref PerformanceInformation pi, int size);
 

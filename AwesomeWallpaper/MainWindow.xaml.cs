@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Forms;
-using System.Threading;
 using AwesomeWallpaper.Settings;
 using AwesomeWallpaper.Native;
 using static AwesomeWallpaper.Native.NativeConstants;
@@ -20,22 +20,19 @@ namespace AwesomeWallpaper
 
         public Native.Rect MonitorRect { get; private set; }
 
-        public IntPtr WindowHandle { get; private set; }
-
         public ProgramSettings Settings { get; private set; }
 
-        public MainWindow(ProgramSettings settings, Native.Rect monitorRect, IntPtr windowHandle)
+        public MainWindow(ProgramSettings settings, Native.Rect monitorRect)
         {
             InitializeComponent();
             Settings = settings;
             MonitorRect = monitorRect;
-            WindowHandle = windowHandle;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var screens = Screen.AllScreens;
-            var handle = Settings.WallpaperType == WallpaperType.Window ? WindowHandle : new WindowInteropHelper(this).Handle;            
+            var handle = Settings.WallpaperType == WallpaperType.Window ? new IntPtr(Settings.WindowHandle.Value) : new WindowInteropHelper(this).Handle;            
             SetStyles(handle);
             SendMessageToProgman();
             var workerWHandle = GetWorkerW(handle);
@@ -52,6 +49,12 @@ namespace AwesomeWallpaper
             }
             else
             {
+                if (Settings.WindowHandle != null)
+                {
+                    PostMessage(new IntPtr(Settings.WindowHandle.Value), WM_CLOSE, 0, 0);
+                    Thread.Sleep(1000);
+                }
+                Settings.ClearWindow();
                 SetWindowPos(handle, (IntPtr)1, MonitorRect.Left, MonitorRect.Top, MonitorRect.Width, MonitorRect.Height, 0 | 0x0010);
                 MapWindowPoints(handle, workerWHandle, ref rect, 2);
                 SetParent(handle, workerWHandle);
@@ -71,15 +74,12 @@ namespace AwesomeWallpaper
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !AllowClose;
-            if (e.Cancel)
+            /*if (Settings.WallpaperType == WallpaperType.Window && Settings.WindowHandle != null && Settings.WindowHandle != IntPtr.Zero)
             {
-                if (Settings.WallpaperType == WallpaperType.Window && WindowHandle != null && WindowHandle != IntPtr.Zero)
-                {
-                    PostMessage(WindowHandle, WM_CLOSE, 0, 0);
-                    Thread.Sleep(1000);
-                }
-                RefreshDesktop();
-            }
+                PostMessage(Settings.WindowHandle, WM_CLOSE, 0, 0);
+                Thread.Sleep(1000);
+            }*/
+            RefreshDesktop();
         }
 
         private unsafe IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

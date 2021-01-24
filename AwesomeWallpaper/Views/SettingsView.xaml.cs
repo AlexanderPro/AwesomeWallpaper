@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
@@ -103,6 +103,15 @@ namespace AwesomeWallpaper.Views
                     viewModel.WallpaperType = Settings.WallpaperType.Web;
                 }
             }
+
+            if (TabControlMain.SelectedIndex == 6 && viewModel.WallpaperType != Settings.WallpaperType.Window)
+            {
+                var result = MessageBox.Show("Change wallpaper type to \"Any Window\"?", "Attention", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    viewModel.WallpaperType = Settings.WallpaperType.Window;
+                }
+            }
         }
 
         private void TargetButton_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -119,6 +128,11 @@ namespace AwesomeWallpaper.Views
             {
                 _isButtonTargetMouseDown = false;
                 SetCursor(System.Windows.Forms.Cursors.Default.Handle);
+                var viewModel = (SettingsViewModel)DataContext;
+                viewModel.AnyWindowDelimiterRowHeight = 12;
+                viewModel.AnyWindowRowHeight = 25;
+                viewModel.AnyWindowImageRowHeight = 0;
+                WindowImage.Source = new BitmapImage(new Uri("pack://application:,,,/Images/1x1.png"));
             }
         }
 
@@ -131,23 +145,48 @@ namespace AwesomeWallpaper.Views
                     SetCursor(Properties.Resources.Target32.Handle);
                     var cursorPosition = System.Windows.Forms.Cursor.Position;
                     var handle = WindowFromPoint(new System.Drawing.Point(cursorPosition.X, cursorPosition.Y));
-                    var viewModel = (SettingsViewModel)DataContext;
-                    handle = WindowUtils.GetParentWindow(handle);
+                    var parentHandle = WindowUtils.GetParentWindow(handle);
+                    var className = WindowUtils.GetClassName(handle);
+                    var parentClassName = WindowUtils.GetClassName(parentHandle);
                     var thisWindowHandle = new WindowInteropHelper(this).Handle;
-                    if (thisWindowHandle == handle)
+                    var viewModel = (SettingsViewModel)DataContext;
+                    var classNames = new List<string>
                     {
-                        viewModel.WindowHandleText = "";
+                        "Shell_TrayWnd",
+                        "TrayNotifyWnd",
+                        "SysPager",
+                        "ToolbarWindow32",
+                        "ReBarWindow32",
+                        "MSTaskSwWClass",
+                        "MSTaskListWClass",
+                        "Progman",
+                        "WorkerW",
+                        "SHELLDLL_DefView",
+                        "SysListView32",
+                        "Start",
+                        "Shell_SecondaryTrayWnd"
+                    };
+                    if (thisWindowHandle == parentHandle || classNames.Contains(className) || classNames.Contains(parentClassName))
+                    {
+                        viewModel.WindowHandle = IntPtr.Zero;
+                        viewModel.WindowStatus = "Not Selected";
                         viewModel.WindowText = "";
+                        viewModel.AnyWindowDelimiterRowHeight = 12;
+                        viewModel.AnyWindowRowHeight = 25;
+                        viewModel.AnyWindowImageRowHeight = 0;
                         WindowImage.Source = new BitmapImage(new Uri("pack://application:,,,/Images/1x1.png"));
                     }
                     else
                     {
-                        var windowHandleText = string.Format("0x{0:X}", handle.ToInt64());
-                        viewModel.WindowHandleText = windowHandleText;
-                        var windowTitle = WindowUtils.GetWmGetText(handle);
+                        viewModel.WindowHandle = parentHandle;
+                        viewModel.WindowStatus = "Selected";
+                        var windowTitle = WindowUtils.GetWmGetText(parentHandle);
                         viewModel.WindowText = windowTitle;
-                        var windowImage = WindowUtils.PrintWindow(handle);
+                        var windowImage = WindowUtils.PrintWindow(parentHandle);
                         WindowImage.Source = ImageUtils.ConvertImageToBitmapSource(windowImage);
+                        viewModel.AnyWindowDelimiterRowHeight = 0;
+                        viewModel.AnyWindowRowHeight = 0;
+                        viewModel.AnyWindowImageRowHeight = 155;
                     }
                 }
                 catch (Exception ex)

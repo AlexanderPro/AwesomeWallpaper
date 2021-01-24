@@ -49,6 +49,15 @@ namespace AwesomeWallpaper.ViewModels
             VideoTransparency = settings.VideoTransparency;
             WebUrl = settings.WebUrl;
             WebRefreshInterval = settings.WebRefreshInterval == null ? (TimeSpan?)null : TimeSpan.FromSeconds(settings.WebRefreshInterval.Value);
+            WindowHandle = settings.WindowHandle == null ? IntPtr.Zero : new IntPtr(settings.WindowHandle.Value);
+            WindowText = settings.WindowText;
+            WindowStatus = settings.WindowStatus;
+            WindowClassName = settings.WindowClassName;
+            WindowProcessName = settings.WindowProcessName;
+            WindowHorizontalAlignment = settings.WindowHorizontalAlignment;
+            WindowVerticalAlignment = settings.WindowVerticalAlignment;
+            WindowFullScreen = settings.WindowFullScreen;
+            WindowUseAfterRestart = settings.WindowUseAfterRestart;
         }
 
         private int _selectedTabIndex;
@@ -296,11 +305,11 @@ namespace AwesomeWallpaper.ViewModels
             set { SetProperty(ref _windowHandle, value); }
         }
 
-        private string _windowHandleText = "";
-        public string WindowHandleText
+        private string _windowStatus = "";
+        public string WindowStatus
         {
-            get { return _windowHandleText; }
-            set { SetProperty(ref _windowHandleText, value); }
+            get { return _windowStatus; }
+            set { SetProperty(ref _windowStatus, value); }
         }
 
         private string _windowText = "";
@@ -350,6 +359,27 @@ namespace AwesomeWallpaper.ViewModels
         {
             get { return _windowUseAfterRestart; }
             set { SetProperty(ref _windowUseAfterRestart, value); }
+        }
+
+        private int _anyWindowRowHeight = 25;
+        public int AnyWindowRowHeight
+        {
+            get { return _anyWindowRowHeight; }
+            set { SetProperty(ref _anyWindowRowHeight, value); }
+        }
+
+        private int _anyWindowDelimiterRowHeight = 12;
+        public int AnyWindowDelimiterRowHeight
+        {
+            get { return _anyWindowDelimiterRowHeight; }
+            set { SetProperty(ref _anyWindowDelimiterRowHeight, value); }
+        }
+
+        private int _anyWindowImageRowHeight = 0;
+        public int AnyWindowImageRowHeight
+        {
+            get { return _anyWindowImageRowHeight; }
+            set { SetProperty(ref _anyWindowImageRowHeight, value); }
         }
 
         public IEnumerable<FontFamily> SystemFonts => Fonts.SystemFontFamilies.OrderBy(font => font.Source);

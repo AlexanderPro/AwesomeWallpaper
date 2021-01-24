@@ -70,8 +70,9 @@ namespace AwesomeWallpaper
             Settings.VideoTransparency = settings.VideoTransparency;
             Settings.WebUrl = settings.WebUrl;
             Settings.WebRefreshInterval = settings.WebRefreshInterval == null ? null : (int?)settings.WebRefreshInterval.Value.TotalSeconds;
-            Settings.WindowHandle = settings.WindowHandle;
+            Settings.WindowHandle = settings.WindowHandle == IntPtr.Zero ? null : (long?)settings.WindowHandle.ToInt64();
             Settings.WindowText = settings.WindowText;
+            Settings.WindowStatus = settings.WindowStatus;
             Settings.WindowClassName = settings.WindowClassName;
             Settings.WindowProcessName = settings.WindowProcessName;
             Settings.WindowHorizontalAlignment = settings.WindowHorizontalAlignment;
@@ -115,7 +116,7 @@ namespace AwesomeWallpaper
                                     Settings.WallpaperType == WallpaperType.Image ? new ImageView() :
                                     Settings.WallpaperType == WallpaperType.Web ? new WebView() :
                                     (UserControl)new GalleryView();
-                    var mainWindow = new MainWindow (Settings, info.rcMonitor, IntPtr.Zero)
+                    var mainWindow = new MainWindow (Settings, info.rcMonitor)
                     {
                         DataContext = viewModel,
                     };

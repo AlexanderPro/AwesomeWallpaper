@@ -287,11 +287,18 @@ namespace AwesomeWallpaper.Settings
             set { SetProperty(ref _webUrl, value); }
         }
 
-        private IntPtr _windowHandle = IntPtr.Zero;
-        public IntPtr WindowHandle
+        private long? _windowHandle = null;
+        public long? WindowHandle
         {
             get { return _windowHandle; }
             set { SetProperty(ref _windowHandle, value); }
+        }
+
+        private string _windowStatus = "";
+        public string WindowStatus
+        {
+            get { return _windowStatus; }
+            set { SetProperty(ref _windowStatus, value); }
         }
 
         private string _windowText = "";
@@ -359,6 +366,19 @@ namespace AwesomeWallpaper.Settings
         {
             get { return _galleryFileExtensions; }
             set { SetProperty(ref _galleryFileExtensions, value); }
+        }
+
+        public void ClearWindow()
+        {
+            WindowHandle = null;
+            WindowStatus = "";
+            WindowText = "";
+            WindowClassName = "";
+            WindowProcessName = "";
+            WindowHorizontalAlignment = HorizontalAlignment.Center;
+            WindowVerticalAlignment = VerticalAlignment.Center;
+            WindowFullScreen = true;
+            WindowUseAfterRestart = true;
         }
     }
 }
