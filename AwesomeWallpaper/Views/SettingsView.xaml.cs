@@ -59,6 +59,8 @@ namespace AwesomeWallpaper.Views
         private void ButtonOk_Click(object sender, RoutedEventArgs e)
         {
             var viewModel = (SettingsViewModel)DataContext;
+            viewModel.KeepOpened = false;
+
             if (TabControlMain.SelectedIndex == 1 && viewModel.WallpaperType != Settings.WallpaperType.SystemInformation)
             {
                 var result = MessageBox.Show("Change wallpaper type to \"SystemInformation\"?", "Attention", MessageBoxButton.YesNo);
@@ -104,12 +106,29 @@ namespace AwesomeWallpaper.Views
                 }
             }
 
-            if (TabControlMain.SelectedIndex == 6 && viewModel.WallpaperType != Settings.WallpaperType.Window)
+            if (TabControlMain.SelectedIndex == 6)
             {
-                var result = MessageBox.Show("Change wallpaper type to \"Any Window\"?", "Attention", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.Yes)
+                if (viewModel.Monitor == null)
                 {
-                    viewModel.WallpaperType = Settings.WallpaperType.Window;
+                    MessageBox.Show("You should select only one monitor on the \"General\" tab.", "Attention");
+                    viewModel.KeepOpened = true;
+                    return;
+                }
+
+                if (viewModel.WindowHandle == null || viewModel.WindowHandle == IntPtr.Zero || !IsWindow(viewModel.WindowHandle))
+                {
+                    MessageBox.Show("The window is not selected or is already closed. Please select a new window again.", "Attention");
+                    viewModel.KeepOpened = true;
+                    return;
+                }
+
+                if (viewModel.WallpaperType != Settings.WallpaperType.Window)
+                {
+                    var result = MessageBox.Show("Change wallpaper type to \"Any Window\"?", "Attention", MessageBoxButton.YesNo);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        viewModel.WallpaperType = Settings.WallpaperType.Window;
+                    }
                 }
             }
         }

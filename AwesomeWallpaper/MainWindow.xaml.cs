@@ -44,6 +44,25 @@ namespace AwesomeWallpaper
                 {
                     SetWindowPos(handle, (IntPtr)1, MonitorRect.Left, MonitorRect.Top, MonitorRect.Width, MonitorRect.Height, 0 | 0x0010);
                 }
+                else
+                {
+                    var currentMonitorHandle = MonitorFromWindow(handle, MONITOR_DEFAULTTONEAREST);
+                    var currentMonitorInfo = new MonitorInfo();
+                    currentMonitorInfo.Init();
+
+                    GetMonitorInfo(currentMonitorHandle, ref currentMonitorInfo);
+                    var currentMonitorRect = currentMonitorInfo.rcMonitor;
+
+                    GetWindowRect(handle, out Native.Rect windowRect);
+                    var left = MonitorRect.Left + windowRect.Left - currentMonitorRect.Left;
+                    var top = MonitorRect.Top + windowRect.Top - currentMonitorRect.Top;
+                    if (windowRect.Left - currentMonitorRect.Left > MonitorRect.Width || windowRect.Top - currentMonitorRect.Top > MonitorRect.Height)
+                    {
+                        left = MonitorRect.Left;
+                        top = MonitorRect.Top;
+                    }
+                    MoveWindow(handle, left, top, windowRect.Width, windowRect.Height, true);
+                }
                 SetParent(handle, workerWHandle);
                 RefreshDesktop();
             }
@@ -74,11 +93,11 @@ namespace AwesomeWallpaper
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !AllowClose;
-            /*if (Settings.WallpaperType == WallpaperType.Window && Settings.WindowHandle != null && Settings.WindowHandle != IntPtr.Zero)
+            if (Settings.WallpaperType == WallpaperType.Window && Settings.WindowHandle != null)
             {
-                PostMessage(Settings.WindowHandle, WM_CLOSE, 0, 0);
+                PostMessage(new IntPtr(Settings.WindowHandle.Value), WM_CLOSE, 0, 0);
                 Thread.Sleep(1000);
-            }*/
+            }
             RefreshDesktop();
         }
 

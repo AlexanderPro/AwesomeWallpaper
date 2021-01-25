@@ -18,6 +18,9 @@ namespace AwesomeWallpaper.Native
         [DllImport("user32")]
         public static extern IntPtr SetWindowPos(IntPtr hWnd, IntPtr hWndAfter, int x, int y, int dx, int cy, uint flags);
 
+        [DllImport("user32.dll")]
+        public static extern bool MoveWindow(IntPtr handle, int x, int y, int nWidth, int nHeight, bool bRepaint);
+
         [DllImport("user32")]
         public static extern bool EnumDisplayMonitors(IntPtr hDC, IntPtr clipRect, EnumMonitorProc proc, IntPtr data);
 
@@ -26,6 +29,10 @@ namespace AwesomeWallpaper.Native
 
         [DllImport("user32")]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWindow(IntPtr hWnd);
 
         [DllImport("user32")]
         public static extern int SetWindowLong(IntPtr hWnd, int index, int value);
@@ -132,5 +139,8 @@ namespace AwesomeWallpaper.Native
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetParent(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
     }
 }
