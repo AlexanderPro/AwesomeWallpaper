@@ -71,12 +71,14 @@ namespace AwesomeWallpaper
             Settings.WebUrl = settings.WebUrl;
             Settings.WebRefreshInterval = settings.WebRefreshInterval == null ? null : (int?)settings.WebRefreshInterval.Value.TotalSeconds;
             Settings.WindowHandle = settings.WindowHandle == IntPtr.Zero ? null : (long?)settings.WindowHandle.ToInt64();
+            Settings.WindowExTool = settings.WindowExTool;
+            Settings.WindowPreviouseHandle = settings.WindowPreviouseHandle == IntPtr.Zero ? null: (long?)settings.WindowPreviouseHandle.ToInt64();
+            Settings.WindowPreviouseExTool = settings.WindowPreviouseExTool;
             Settings.WindowText = settings.WindowText;
             Settings.WindowStatus = settings.WindowStatus;
             Settings.WindowClassName = settings.WindowClassName;
             Settings.WindowProcessName = settings.WindowProcessName;
-            Settings.WindowHorizontalAlignment = settings.WindowHorizontalAlignment;
-            Settings.WindowVerticalAlignment = settings.WindowVerticalAlignment;
+            Settings.WindowAlignment = settings.WindowAlignment;
             Settings.WindowFullScreen = settings.WindowFullScreen;
             Settings.WindowUseAfterRestart = settings.WindowUseAfterRestart;
 
@@ -293,7 +295,7 @@ namespace AwesomeWallpaper
             }
         }
 
-        public void LoadSettings()
+        public bool LoadSettings()
         {
             var settingsFileName = Path.GetFileNameWithoutExtension(AssemblyUtils.AssemblyLocation) + ".xml";
             settingsFileName = Path.Combine(AssemblyUtils.AssemblyDirectoryName, settingsFileName);
@@ -303,16 +305,19 @@ namespace AwesomeWallpaper
                 {
                     var xml = File.ReadAllText(settingsFileName, Encoding.UTF8);
                     Settings = SerializeUtils.Deserialize<ProgramSettings>(xml);
+                    return true;
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show($"Failed to load settings from the file {settingsFileName}{Environment.NewLine}{e.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
                 }
             }
             else
             {
                 Settings.VideoFileExtensions = new List<string> { "*.mp4", "*.mp3", "*.mpg", "*.mpeg", "*.avi" };
                 Settings.GalleryFileExtensions = new List<string> { "*.bmp", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.tiff" };
+                return true;
             }
         }
 

@@ -31,21 +31,57 @@ namespace AwesomeWallpaper
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var screens = Screen.AllScreens;
-            var handle = Settings.WallpaperType == WallpaperType.Window ? new IntPtr(Settings.WindowHandle.Value) : new WindowInteropHelper(this).Handle;            
-            SetStyles(handle);
-            SendMessageToProgman();
-            var workerWHandle = GetWorkerW(handle);
+            if (Settings.WindowPreviouseHandle != null)
+            {
+                var handle = new IntPtr(Settings.WindowPreviouseHandle.Value);
+                SetParent(handle, IntPtr.Zero);
+                if (!Settings.WindowPreviouseExTool)
+                {
+                    EnableExToolWindow(handle, false);
+                }
+
+                SetWindowPos(handle, new IntPtr(HWND_TOP), 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE);
+                Settings.WindowPreviouseHandle = null;
+                Settings.WindowPreviouseExTool = false;
+                RefreshDesktop();
+                Thread.Sleep(1000);
+                SetParent(handle, IntPtr.Zero);
+            }
+
+            if (Settings.WindowHandle != null)
+            {
+                var handle = new IntPtr(Settings.WindowHandle.Value);
+                SetParent(handle, IntPtr.Zero);
+                if (!Settings.WindowExTool)
+                {
+                    EnableExToolWindow(handle, false);
+                }
+                SetWindowPos(handle, new IntPtr(HWND_TOP), 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE);
+                RefreshDesktop();
+                Thread.Sleep(1000);
+                SetParent(handle, IntPtr.Zero);
+            }
+
             var rect = new Native.Rect();
             if (Settings.WallpaperType == WallpaperType.Window)
             {
                 Hide();
+                var handle = Settings.WindowHandle == null ? IntPtr.Zero : new IntPtr(Settings.WindowHandle.Value);
+                if (handle == IntPtr.Zero)
+                {
+                    RefreshDesktop();
+                    return;
+                }
+                SendMessageToProgman();
+                EnableExToolWindow(handle, true);
+                var workerWHandle = GetWorkerW(handle);
                 if (Settings.WindowFullScreen)
                 {
                     SetWindowPos(handle, (IntPtr)1, MonitorRect.Left, MonitorRect.Top, MonitorRect.Width, MonitorRect.Height, 0 | 0x0010);
                 }
                 else
                 {
+                    // Move a window to new monitor if nessesary
                     var currentMonitorHandle = MonitorFromWindow(handle, MONITOR_DEFAULTTONEAREST);
                     var currentMonitorInfo = new MonitorInfo();
                     currentMonitorInfo.Init();
@@ -56,10 +92,73 @@ namespace AwesomeWallpaper
                     GetWindowRect(handle, out Native.Rect windowRect);
                     var left = MonitorRect.Left + windowRect.Left - currentMonitorRect.Left;
                     var top = MonitorRect.Top + windowRect.Top - currentMonitorRect.Top;
-                    if (windowRect.Left - currentMonitorRect.Left > MonitorRect.Width || windowRect.Top - currentMonitorRect.Top > MonitorRect.Height)
+                    MoveWindow(handle, left, top, windowRect.Width, windowRect.Height, true);
+
+                    // Alignment a window
+                    switch (Settings.WindowAlignment)
                     {
-                        left = MonitorRect.Left;
-                        top = MonitorRect.Top;
+                        case WindowAlignment.TopLeft:
+                            {
+                                left = MonitorRect.Left;
+                                top = MonitorRect.Top;
+                            }
+                            break;
+
+                        case WindowAlignment.TopCenter:
+                            {
+                                left = MonitorRect.Left + ((MonitorRect.Width - windowRect.Width) / 2);
+                                top = MonitorRect.Top;
+                            }
+                            break;
+
+                        case WindowAlignment.TopRight:
+                            {
+                                left = MonitorRect.Left + (MonitorRect.Width - windowRect.Width);
+                                top = MonitorRect.Top;
+                            }
+                            break;
+
+                        case WindowAlignment.MiddleLeft:
+                            {
+                                left = MonitorRect.Left;
+                                top = MonitorRect.Top + ((MonitorRect.Height - windowRect.Height) / 2);
+                            }
+                            break;
+
+                        case WindowAlignment.MiddleCenter:
+                            {
+                                left = MonitorRect.Left + ((MonitorRect.Width - windowRect.Width) / 2);
+                                top = MonitorRect.Top + ((MonitorRect.Height - windowRect.Height) / 2);
+                            }
+                            break;
+
+                        case WindowAlignment.MiddleRight:
+                            {
+                                left = MonitorRect.Left + (MonitorRect.Width - windowRect.Width);
+                                top = MonitorRect.Top + ((MonitorRect.Height - windowRect.Height) / 2);
+                            }
+                            break;
+
+                        case WindowAlignment.BottomLeft:
+                            {
+                                left = MonitorRect.Left;
+                                top = MonitorRect.Top + (MonitorRect.Height - windowRect.Height);
+                            }
+                            break;
+
+                        case WindowAlignment.BottomCenter:
+                            {
+                                left = MonitorRect.Left + ((MonitorRect.Width - windowRect.Width) / 2);
+                                top = MonitorRect.Top + (MonitorRect.Height - windowRect.Height);
+                            }
+                            break;
+
+                        case WindowAlignment.BottomRight:
+                            {
+                                left = MonitorRect.Left + (MonitorRect.Width - windowRect.Width);
+                                top = MonitorRect.Top + (MonitorRect.Height - windowRect.Height);
+                            }
+                            break;
                     }
                     MoveWindow(handle, left, top, windowRect.Width, windowRect.Height, true);
                 }
@@ -68,12 +167,11 @@ namespace AwesomeWallpaper
             }
             else
             {
-                if (Settings.WindowHandle != null)
-                {
-                    PostMessage(new IntPtr(Settings.WindowHandle.Value), WM_CLOSE, 0, 0);
-                    Thread.Sleep(1000);
-                }
                 Settings.ClearWindow();
+                var handle = new WindowInteropHelper(this).Handle;
+                SendMessageToProgman();
+                EnableExToolWindow(handle, true);
+                var workerWHandle = GetWorkerW(handle);
                 SetWindowPos(handle, (IntPtr)1, MonitorRect.Left, MonitorRect.Top, MonitorRect.Width, MonitorRect.Height, 0 | 0x0010);
                 MapWindowPoints(handle, workerWHandle, ref rect, 2);
                 SetParent(handle, workerWHandle);
@@ -93,12 +191,21 @@ namespace AwesomeWallpaper
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !AllowClose;
-            if (Settings.WallpaperType == WallpaperType.Window && Settings.WindowHandle != null)
+            if (e.Cancel && Settings.WindowHandle != null)
             {
-                PostMessage(new IntPtr(Settings.WindowHandle.Value), WM_CLOSE, 0, 0);
-                Thread.Sleep(1000);
+                var handle = new IntPtr(Settings.WindowHandle.Value);
+                SetParent(handle, IntPtr.Zero);
+                if (!Settings.WindowExTool)
+                {
+                    EnableExToolWindow(handle, false);
+                }
+                RefreshDesktop();
+                SetParent(handle, IntPtr.Zero);
             }
-            RefreshDesktop();
+            else
+            {
+                RefreshDesktop();
+            }
         }
 
         private unsafe IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
 using System.Diagnostics;
+using System.Linq;
+using System.Management;
 using AwesomeWallpaper.Native;
 using static AwesomeWallpaper.Native.NativeConstants;
 using static AwesomeWallpaper.Native.NativeMethods;
@@ -42,12 +44,24 @@ namespace AwesomeWallpaper.Utils
             return workerWHandle;
         }
 
-        public static void SetStyles(IntPtr hwnd)
+        public static bool IsExToolWindow(IntPtr hwnd)
         {
             var exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-            exStyle |= WS_EX_TOOLWINDOW;
+            return (exStyle & WS_EX_TOOLWINDOW) != 0;
+        }
+
+        public static void EnableExToolWindow(IntPtr hwnd, bool enable)
+        {
+            var exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
+            if (enable)
+            {
+                exStyle |= WS_EX_TOOLWINDOW;
+            }
+            else
+            {
+                exStyle &= ~WS_EX_TOOLWINDOW;
+            }
             SetWindowLong(hwnd, GWL_EXSTYLE, exStyle);
-            SetWindowPos(hwnd, new IntPtr(HWND_BOTTOM), 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE);
         }
 
         public static void EnableNoActive(IntPtr hwnd, bool enable)
@@ -129,16 +143,23 @@ namespace AwesomeWallpaper.Utils
 
         public static string GetProcessName(IntPtr hwnd)
         {
+            int processId = 0;
             try
             {
-                int processId;
                 GetWindowThreadProcessId(hwnd, out processId);
                 var process = Process.GetProcessById(processId);
                 return process.MainModule.FileName;
             }
             catch
             {
-                return string.Empty;
+                try
+                {
+                    return GetProcessName(processId);
+                }
+                catch
+                {
+                    return string.Empty;
+                }
             }
         }
 
@@ -165,6 +186,20 @@ namespace AwesomeWallpaper.Utils
                 resultHwnd = parentHwnd;
             }
             return resultHwnd;
+        }
+
+        private static string GetProcessName(int processId)
+        {
+            using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Process WHERE ProcessId = " + processId))
+            using (var objects = searcher.Get())
+            {
+                var baseObject = objects.Cast<ManagementBaseObject>().FirstOrDefault();
+                if (baseObject != null)
+                {
+                    return baseObject["ExecutablePath"] != null ? baseObject["ExecutablePath"].ToString() : "";
+                }
+                return "";
+            }
         }
     }
 }

@@ -9,7 +9,8 @@
         Icon="/AwesomeWallpaper.ico"
         WindowStartupLocation="CenterScreen"
         Title="Settings" 
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        Loaded="Window_Loaded">
     <Grid Width="450" Height="410">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -286,7 +287,7 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Any Window">
+            <TabItem Header="Window">
                 <StackPanel>
                     <Grid Margin="15">
                         <Grid.ColumnDefinitions>
@@ -300,15 +301,13 @@
                             <RowDefinition Height="25" />
                             <RowDefinition Height="12" />
                             <RowDefinition Height="25" />
-                            <RowDefinition Height="{Binding AnyWindowDelimiterRowHeight}" />
-                            <RowDefinition Height="{Binding AnyWindowRowHeight}" />
-                            <RowDefinition Height="{Binding AnyWindowDelimiterRowHeight}" />
-                            <RowDefinition Height="{Binding AnyWindowRowHeight}" />
-                            <RowDefinition Height="{Binding AnyWindowDelimiterRowHeight}" />
-                            <RowDefinition Height="{Binding AnyWindowRowHeight}" />
-                            <RowDefinition Height="{Binding AnyWindowDelimiterRowHeight}" />
-                            <RowDefinition Height="{Binding AnyWindowRowHeight}" />
-                            <RowDefinition Height="{Binding AnyWindowDelimiterRowHeight}" />
+                            <RowDefinition Height="{Binding WindowDelimiterRowHeight}" />
+                            <RowDefinition Height="{Binding WindowRowHeight}" />
+                            <RowDefinition Height="{Binding WindowDelimiterRowHeight}" />
+                            <RowDefinition Height="{Binding WindowRowHeight}" />
+                            <RowDefinition Height="{Binding WindowDelimiterRowHeight}" />
+                            <RowDefinition Height="{Binding WindowRowHeight}" />
+                            <RowDefinition Height="{Binding WindowDelimiterRowHeight}" />
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Find Window:" Grid.Row="0" VerticalAlignment="Center" />
@@ -325,24 +324,21 @@
                         <TextBlock Text="Window Title:" Grid.Row="4" VerticalAlignment="Center" />
                         <TextBox Grid.Row="4" Grid.Column="2" Padding="3" Text="{Binding WindowText, Mode=TwoWay}" IsReadOnly="True"></TextBox>
 
-                        <TextBlock Text="Horizontal Alignment:" Grid.Row="6" VerticalAlignment="Center" />
-                        <ComboBox Grid.Row="6" Grid.Column="2" Padding="3" ItemsSource="{Binding HorizontalAlignments}" SelectedValue="{Binding WindowHorizontalAlignment, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+                        <TextBlock Text="Alignment:" Grid.Row="6" VerticalAlignment="Center" />
+                        <ComboBox Grid.Row="6" Grid.Column="2" Padding="3" ItemsSource="{Binding WindowAlignments}" SelectedValue="{Binding WindowAlignment, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
 
-                        <TextBlock Text="Vertical Alignment:" Grid.Row="8" VerticalAlignment="Center" />
-                        <ComboBox Grid.Row="8" Grid.Column="2" Padding="3" ItemsSource="{Binding VerticalAlignments}" SelectedValue="{Binding WindowVerticalAlignment, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+                        <TextBlock Text="Full Screen:" Grid.Row="8" VerticalAlignment="Center" />
+                        <ComboBox Grid.Row="8" Grid.Column="2" Padding="3" ItemsSource="{Binding TrueFalseItems}" SelectedValue="{Binding WindowFullScreen, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
 
-                        <TextBlock Text="Full Screen:" Grid.Row="10" VerticalAlignment="Center" />
-                        <ComboBox Grid.Row="10" Grid.Column="2" Padding="3" ItemsSource="{Binding TrueFalseItems}" SelectedValue="{Binding WindowFullScreen, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
-
-                        <TextBlock Text="Use After Restart:" Grid.Row="12" VerticalAlignment="Center" />
-                        <ComboBox Grid.Row="12" Grid.Column="2" Padding="3" ItemsSource="{Binding TrueFalseItems}" SelectedValue="{Binding WindowUseAfterRestart, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+                        <TextBlock Text="Use After Restart:" Grid.Row="10" VerticalAlignment="Center" />
+                        <ComboBox Grid.Row="10" Grid.Column="2" Padding="3" ItemsSource="{Binding TrueFalseItems}" SelectedValue="{Binding WindowUseAfterRestart, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="{Binding AnyWindowImageRowHeight}" />
+                            <RowDefinition Height="{Binding WindowImageRowHeight}" />
                         </Grid.RowDefinitions>
 
                         <Border Grid.Row="1" Grid.Column="1" Background="Gray">

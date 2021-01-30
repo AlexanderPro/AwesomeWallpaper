@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using CefSharp;
 using CefSharp.Wpf;
 using AwesomeWallpaper.Utils;
+using static AwesomeWallpaper.Native.NativeMethods;
 
 namespace AwesomeWallpaper
 {
@@ -36,16 +37,40 @@ namespace AwesomeWallpaper
             }
 
             _manager = new ViewManager();
-            _manager.LoadSettings();
-            _manager.CreateViews();
-            _manager.InitTray();
-
-            _timerSystemTray = new DispatcherTimer()
+            var isSettingsLoaded = _manager.LoadSettings();
+            if (isSettingsLoaded)
             {
-                Interval = TimeSpan.FromSeconds(1),
-            };
-            _timerSystemTray.Tick += TimerTick;
-            _timerSystemTray.Start();
+                if (_manager.Settings.WallpaperType == Settings.WallpaperType.Window && 
+                    _manager.Settings.WindowUseAfterRestart && 
+                    !string.IsNullOrEmpty(_manager.Settings.WindowProcessName))
+                {
+                    EnumWindows(new EnumWindowsProc((hWnd, lParam) =>
+                    {
+                        var processName = WindowUtils.GetProcessName(hWnd);
+                        var windowText = WindowUtils.GetWmGetText(hWnd);
+                        var windowClassName = WindowUtils.GetClassName(hWnd);
+                        if (string.Compare(windowText, _manager.Settings.WindowText, StringComparison.CurrentCultureIgnoreCase) == 0 &&
+                            string.Compare(windowClassName, _manager.Settings.WindowClassName, StringComparison.CurrentCultureIgnoreCase) == 0 &&
+                            string.Compare(processName, _manager.Settings.WindowProcessName, StringComparison.CurrentCultureIgnoreCase) == 0)
+                        {
+                            _manager.Settings.WindowHandle = hWnd == IntPtr.Zero ? null : (long?)hWnd.ToInt64();
+                            _manager.Settings.WindowExTool = WindowUtils.IsExToolWindow(hWnd);
+                            _manager.Settings.WindowStatus = "Selected";
+                            return false;
+                        }
+                        return true;
+                    }), IntPtr.Zero);
+                }
+                _manager.CreateViews();
+                _manager.InitTray();
+
+                _timerSystemTray = new DispatcherTimer()
+                {
+                    Interval = TimeSpan.FromSeconds(1),
+                };
+                _timerSystemTray.Tick += TimerTick;
+                _timerSystemTray.Start();
+            }
         }
 
         private void TimerTick(object sender, EventArgs e)

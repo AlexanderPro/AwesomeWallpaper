@@ -134,11 +134,12 @@
     <Compile Include="Settings\GalleryState.cs" />
     <Compile Include="Settings\ProgramSettings.cs" />
     <Compile Include="Settings\WallpaperType.cs" />
+    <Compile Include="Settings\WindowAlignment.cs" />
     <Compile Include="StartUpManager.cs" />
     <Compile Include="Utils\AssemblyUtils.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="Utils\SerializeUtils.cs" />
-    <Compile Include="Utils\SystemInformationUtils.cs" />
+    <Compile Include="Utils\SystemUtils.cs" />
     <Compile Include="Utils\WindowUtils.cs" />
     <Compile Include="ViewManager.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />

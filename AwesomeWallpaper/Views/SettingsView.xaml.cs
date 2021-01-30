@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
+using AwesomeWallpaper.Settings;
 using AwesomeWallpaper.ViewModels;
 using AwesomeWallpaper.Utils;
 using static AwesomeWallpaper.Native.NativeMethods;
@@ -18,6 +19,13 @@ namespace AwesomeWallpaper.Views
         {
             InitializeComponent();
             _isButtonTargetMouseDown = false;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var viewModel = (SettingsViewModel)DataContext;
+            viewModel.WindowPreviouseHandle = viewModel.WindowHandle;
+            viewModel.WindowPreviouseExTool = viewModel.WindowExTool;
         }
 
         private void BrowseVideoFile_Click(object sender, RoutedEventArgs e)
@@ -61,52 +69,52 @@ namespace AwesomeWallpaper.Views
             var viewModel = (SettingsViewModel)DataContext;
             viewModel.KeepOpened = false;
 
-            if (TabControlMain.SelectedIndex == 1 && viewModel.WallpaperType != Settings.WallpaperType.SystemInformation)
+            if (TabControlMain.SelectedIndex == 1 && viewModel.WallpaperType != WallpaperType.SystemInformation)
             {
                 var result = MessageBox.Show("Change wallpaper type to \"SystemInformation\"?", "Attention", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    viewModel.WallpaperType = Settings.WallpaperType.SystemInformation;
+                    viewModel.WallpaperType = WallpaperType.SystemInformation;
                 }
             }
 
-            if (TabControlMain.SelectedIndex == 2 && viewModel.WallpaperType != Settings.WallpaperType.Image)
+            if (TabControlMain.SelectedIndex == 2 && viewModel.WallpaperType != WallpaperType.Image)
             {
                 var result = MessageBox.Show("Change wallpaper type to \"Image\"?", "Attention", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    viewModel.WallpaperType = Settings.WallpaperType.Image;
+                    viewModel.WallpaperType = WallpaperType.Image;
                 }
             }
 
-            if (TabControlMain.SelectedIndex == 3 && viewModel.WallpaperType != Settings.WallpaperType.Gallery)
+            if (TabControlMain.SelectedIndex == 3 && viewModel.WallpaperType != WallpaperType.Gallery)
             {
                 var result = MessageBox.Show("Change wallpaper type to \"Gallery\"?", "Attention", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    viewModel.WallpaperType = Settings.WallpaperType.Gallery;
+                    viewModel.WallpaperType = WallpaperType.Gallery;
                 }
             }
 
-            if (TabControlMain.SelectedIndex == 4 && viewModel.WallpaperType != Settings.WallpaperType.Video)
+            if (TabControlMain.SelectedIndex == 4 && viewModel.WallpaperType != WallpaperType.Video)
             {
                 var result = MessageBox.Show("Change wallpaper type to \"Video\"?", "Attention", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    viewModel.WallpaperType = Settings.WallpaperType.Video;
+                    viewModel.WallpaperType = WallpaperType.Video;
                 }
             }
 
-            if (TabControlMain.SelectedIndex == 5 && viewModel.WallpaperType != Settings.WallpaperType.Web)
+            if (TabControlMain.SelectedIndex == 5 && viewModel.WallpaperType != WallpaperType.Web)
             {
                 var result = MessageBox.Show("Change wallpaper type to \"Web\"?", "Attention", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    viewModel.WallpaperType = Settings.WallpaperType.Web;
+                    viewModel.WallpaperType = WallpaperType.Web;
                 }
             }
 
-            if (TabControlMain.SelectedIndex == 6)
+            if (TabControlMain.SelectedIndex == 6 || (TabControlMain.SelectedIndex == 0 && viewModel.WallpaperType == WallpaperType.Window))
             {
                 if (viewModel.Monitor == null)
                 {
@@ -121,14 +129,14 @@ namespace AwesomeWallpaper.Views
                     viewModel.KeepOpened = true;
                     return;
                 }
+            }
 
-                if (viewModel.WallpaperType != Settings.WallpaperType.Window)
+            if (TabControlMain.SelectedIndex == 6 && viewModel.WallpaperType != WallpaperType.Window)
+            {
+                var result = MessageBox.Show("Change wallpaper type to \"Window\"?", "Attention", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
                 {
-                    var result = MessageBox.Show("Change wallpaper type to \"Any Window\"?", "Attention", MessageBoxButton.YesNo);
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        viewModel.WallpaperType = Settings.WallpaperType.Window;
-                    }
+                    viewModel.WallpaperType = WallpaperType.Window;
                 }
             }
         }
@@ -148,9 +156,9 @@ namespace AwesomeWallpaper.Views
                 _isButtonTargetMouseDown = false;
                 SetCursor(System.Windows.Forms.Cursors.Default.Handle);
                 var viewModel = (SettingsViewModel)DataContext;
-                viewModel.AnyWindowDelimiterRowHeight = 12;
-                viewModel.AnyWindowRowHeight = 25;
-                viewModel.AnyWindowImageRowHeight = 0;
+                viewModel.WindowDelimiterRowHeight = 12;
+                viewModel.WindowRowHeight = 25;
+                viewModel.WindowImageRowHeight = 0;
                 WindowImage.Source = new BitmapImage(new Uri("pack://application:,,,/Images/1x1.png"));
             }
         }
@@ -188,24 +196,26 @@ namespace AwesomeWallpaper.Views
                     if (thisWindowHandle == parentHandle || classNames.Contains(className) || classNames.Contains(parentClassName))
                     {
                         viewModel.WindowHandle = IntPtr.Zero;
+                        viewModel.WindowExTool = false;
                         viewModel.WindowStatus = "Not Selected";
                         viewModel.WindowText = "";
-                        viewModel.AnyWindowDelimiterRowHeight = 12;
-                        viewModel.AnyWindowRowHeight = 25;
-                        viewModel.AnyWindowImageRowHeight = 0;
+                        viewModel.WindowDelimiterRowHeight = 12;
+                        viewModel.WindowRowHeight = 25;
+                        viewModel.WindowImageRowHeight = 0;
                         WindowImage.Source = new BitmapImage(new Uri("pack://application:,,,/Images/1x1.png"));
                     }
                     else
                     {
                         viewModel.WindowHandle = parentHandle;
+                        viewModel.WindowExTool = WindowUtils.IsExToolWindow(parentHandle);
+                        viewModel.WindowClassName = WindowUtils.GetClassName(parentHandle);
                         viewModel.WindowStatus = "Selected";
-                        var windowTitle = WindowUtils.GetWmGetText(parentHandle);
-                        viewModel.WindowText = windowTitle;
-                        var windowImage = WindowUtils.PrintWindow(parentHandle);
-                        WindowImage.Source = ImageUtils.ConvertImageToBitmapSource(windowImage);
-                        viewModel.AnyWindowDelimiterRowHeight = 0;
-                        viewModel.AnyWindowRowHeight = 0;
-                        viewModel.AnyWindowImageRowHeight = 155;
+                        viewModel.WindowText = WindowUtils.GetWmGetText(parentHandle);
+                        viewModel.WindowProcessName = WindowUtils.GetProcessName(parentHandle);
+                        WindowImage.Source = ImageUtils.ConvertImageToBitmapSource(WindowUtils.PrintWindow(parentHandle));
+                        viewModel.WindowDelimiterRowHeight = 0;
+                        viewModel.WindowRowHeight = 0;
+                        viewModel.WindowImageRowHeight = 155;
                     }
                 }
                 catch (Exception ex)

@@ -50,12 +50,14 @@ namespace AwesomeWallpaper.ViewModels
             WebUrl = settings.WebUrl;
             WebRefreshInterval = settings.WebRefreshInterval == null ? (TimeSpan?)null : TimeSpan.FromSeconds(settings.WebRefreshInterval.Value);
             WindowHandle = settings.WindowHandle == null ? IntPtr.Zero : new IntPtr(settings.WindowHandle.Value);
+            WindowExTool = settings.WindowExTool;
+            WindowPreviouseHandle = settings.WindowPreviouseHandle == null ? IntPtr.Zero : new IntPtr(settings.WindowPreviouseHandle.Value);
+            WindowPreviouseExTool = settings.WindowPreviouseExTool;
             WindowText = settings.WindowText;
             WindowStatus = settings.WindowStatus;
             WindowClassName = settings.WindowClassName;
             WindowProcessName = settings.WindowProcessName;
-            WindowHorizontalAlignment = settings.WindowHorizontalAlignment;
-            WindowVerticalAlignment = settings.WindowVerticalAlignment;
+            WindowAlignment = settings.WindowAlignment;
             WindowFullScreen = settings.WindowFullScreen;
             WindowUseAfterRestart = settings.WindowUseAfterRestart;
         }
@@ -305,7 +307,28 @@ namespace AwesomeWallpaper.ViewModels
             set { SetProperty(ref _windowHandle, value); }
         }
 
-        private string _windowStatus = "";
+        private bool _windowExTool = false;
+        public bool WindowExTool
+        {
+            get { return _windowExTool; }
+            set { SetProperty(ref _windowExTool, value); }
+        }
+
+        private IntPtr _windowPreviouseHandle = IntPtr.Zero;
+        public IntPtr WindowPreviouseHandle
+        {
+            get { return _windowPreviouseHandle; }
+            set { SetProperty(ref _windowPreviouseHandle, value); }
+        }
+
+        private bool _windowPreviouseExTool = false;
+        public bool WindowPreviouseExTool
+        {
+            get { return _windowPreviouseExTool; }
+            set { SetProperty(ref _windowPreviouseExTool, value); }
+        }
+
+        private string _windowStatus = "Not Selected";
         public string WindowStatus
         {
             get { return _windowStatus; }
@@ -333,53 +356,46 @@ namespace AwesomeWallpaper.ViewModels
             set { SetProperty(ref _windowProcessName, value); }
         }
 
-        private HorizontalAlignment _windowHorizontalAlignment = HorizontalAlignment.Center;
-        public HorizontalAlignment WindowHorizontalAlignment
+        private WindowAlignment _windowAlignment = WindowAlignment.None;
+        public WindowAlignment WindowAlignment
         {
-            get { return _windowHorizontalAlignment; }
-            set { SetProperty(ref _windowHorizontalAlignment, value); }
+            get { return _windowAlignment; }
+            set { SetProperty(ref _windowAlignment, value); }
         }
 
-        private VerticalAlignment _windowVerticalAlignment = VerticalAlignment.Center;
-        public VerticalAlignment WindowVerticalAlignment
-        {
-            get { return _windowVerticalAlignment; }
-            set { SetProperty(ref _windowVerticalAlignment, value); }
-        }
-
-        private bool _windowFullScreen = true;
+        private bool _windowFullScreen = false;
         public bool WindowFullScreen
         {
             get { return _windowFullScreen; }
             set { SetProperty(ref _windowFullScreen, value); }
         }
 
-        private bool _windowUseAfterRestart = true;
+        private bool _windowUseAfterRestart = false;
         public bool WindowUseAfterRestart
         {
             get { return _windowUseAfterRestart; }
             set { SetProperty(ref _windowUseAfterRestart, value); }
         }
 
-        private int _anyWindowRowHeight = 25;
-        public int AnyWindowRowHeight
+        private int _windowRowHeight = 25;
+        public int WindowRowHeight
         {
-            get { return _anyWindowRowHeight; }
-            set { SetProperty(ref _anyWindowRowHeight, value); }
+            get { return _windowRowHeight; }
+            set { SetProperty(ref _windowRowHeight, value); }
         }
 
-        private int _anyWindowDelimiterRowHeight = 12;
-        public int AnyWindowDelimiterRowHeight
+        private int _windowDelimiterRowHeight = 12;
+        public int WindowDelimiterRowHeight
         {
-            get { return _anyWindowDelimiterRowHeight; }
-            set { SetProperty(ref _anyWindowDelimiterRowHeight, value); }
+            get { return _windowDelimiterRowHeight; }
+            set { SetProperty(ref _windowDelimiterRowHeight, value); }
         }
 
-        private int _anyWindowImageRowHeight = 0;
-        public int AnyWindowImageRowHeight
+        private int _windowImageRowHeight = 0;
+        public int WindowImageRowHeight
         {
-            get { return _anyWindowImageRowHeight; }
-            set { SetProperty(ref _anyWindowImageRowHeight, value); }
+            get { return _windowImageRowHeight; }
+            set { SetProperty(ref _windowImageRowHeight, value); }
         }
 
         public IEnumerable<FontFamily> SystemFonts => Fonts.SystemFontFamilies.OrderBy(font => font.Source);
@@ -406,6 +422,8 @@ namespace AwesomeWallpaper.ViewModels
                 return monitors;
             }
         }
+
+        public IEnumerable<KeyValuePair<WindowAlignment, string>> WindowAlignments => Enum.GetValues(typeof(WindowAlignment)).Cast<WindowAlignment>().Select(x => new KeyValuePair<WindowAlignment, string>(x, x.ToString()));
 
         public IEnumerable<KeyValuePair<HorizontalAlignment, string>> HorizontalAlignments => Enum.GetValues(typeof(HorizontalAlignment)).Cast<HorizontalAlignment>().Select(x => new KeyValuePair<HorizontalAlignment, string>(x, x.ToString()));
 

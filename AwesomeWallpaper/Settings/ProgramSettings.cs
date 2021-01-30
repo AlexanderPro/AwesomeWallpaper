@@ -288,13 +288,39 @@ namespace AwesomeWallpaper.Settings
         }
 
         private long? _windowHandle = null;
+        [XmlIgnore]
         public long? WindowHandle
         {
             get { return _windowHandle; }
             set { SetProperty(ref _windowHandle, value); }
         }
 
-        private string _windowStatus = "";
+        private bool _windowExTool = false;
+        [XmlIgnore]
+        public bool WindowExTool
+        {
+            get { return _windowExTool; }
+            set { SetProperty(ref _windowExTool, value); }
+        }
+
+        private long? _windowPreviouseHandle = null;
+        [XmlIgnore]
+        public long? WindowPreviouseHandle
+        {
+            get { return _windowPreviouseHandle; }
+            set { SetProperty(ref _windowPreviouseHandle, value); }
+        }
+
+        private bool _windowPreviouseExTool = false;
+        [XmlIgnore]
+        public bool WindowPreviouseExTool
+        {
+            get { return _windowPreviouseExTool; }
+            set { SetProperty(ref _windowPreviouseExTool, value); }
+        }
+
+        private string _windowStatus = "Not Selected";
+        [XmlIgnore]
         public string WindowStatus
         {
             get { return _windowStatus; }
@@ -322,28 +348,21 @@ namespace AwesomeWallpaper.Settings
             set { SetProperty(ref _windowProcessName, value); }
         }
 
-        private HorizontalAlignment _windowHorizontalAlignment = HorizontalAlignment.Center;
-        public HorizontalAlignment WindowHorizontalAlignment
+        private WindowAlignment _windowAlignment = WindowAlignment.None;
+        public WindowAlignment WindowAlignment
         {
-            get { return _windowHorizontalAlignment; }
-            set { SetProperty(ref _windowHorizontalAlignment, value); }
+            get { return _windowAlignment; }
+            set { SetProperty(ref _windowAlignment, value); }
         }
 
-        private VerticalAlignment _windowVerticalAlignment = VerticalAlignment.Center;
-        public VerticalAlignment WindowVerticalAlignment
-        {
-            get { return _windowVerticalAlignment; }
-            set { SetProperty(ref _windowVerticalAlignment, value); }
-        }
-
-        private bool _windowFullScreen = true;
+        private bool _windowFullScreen = false;
         public bool WindowFullScreen
         {
             get { return _windowFullScreen; }
             set { SetProperty(ref _windowFullScreen, value); }
         }
 
-        private bool _windowUseAfterRestart = true;
+        private bool _windowUseAfterRestart = false;
         public bool WindowUseAfterRestart
         {
             get { return _windowUseAfterRestart; }
@@ -371,14 +390,16 @@ namespace AwesomeWallpaper.Settings
         public void ClearWindow()
         {
             WindowHandle = null;
+            WindowPreviouseHandle = null;
+            WindowExTool = false;
+            WindowPreviouseExTool = false;
             WindowStatus = "";
             WindowText = "";
             WindowClassName = "";
             WindowProcessName = "";
-            WindowHorizontalAlignment = HorizontalAlignment.Center;
-            WindowVerticalAlignment = VerticalAlignment.Center;
-            WindowFullScreen = true;
-            WindowUseAfterRestart = true;
+            WindowAlignment = WindowAlignment.None;
+            WindowFullScreen = false;
+            WindowUseAfterRestart = false;
         }
     }
 }
