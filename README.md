@@ -8,7 +8,7 @@ AwesomeWallpaper plays videos, shows images and system information on your deskt
 * **Gallery.** Shows several images on your desktop.
 * **Video.** Plays a video on your desktop.
 * **Web.** Allows to view web pages, including youtube in the embed mode.
-* **Window.** Allows to set almost any window from your desktop as wallpaper.
+* **Window.** Allows to set any window from your desktop as wallpaper.
 
 Features
 --------------------
