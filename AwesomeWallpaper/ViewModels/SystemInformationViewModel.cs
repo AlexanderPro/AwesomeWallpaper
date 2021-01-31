@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using AwesomeWallpaper.Settings;
-using static AwesomeWallpaper.Utils.SystemInformationUtils;
+using AwesomeWallpaper.Native;
+using static AwesomeWallpaper.Utils.SystemUtils;
 
 namespace AwesomeWallpaper.ViewModels
 {

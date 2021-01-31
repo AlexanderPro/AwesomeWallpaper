@@ -128,17 +128,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="NativeConstants.cs" />
-    <Compile Include="NativeMethods.cs" />
-    <Compile Include="NativeTypes.cs" />
+    <Compile Include="Native\NativeConstants.cs" />
+    <Compile Include="Native\NativeMethods.cs" />
+    <Compile Include="Native\NativeTypes.cs" />
     <Compile Include="Settings\GalleryState.cs" />
     <Compile Include="Settings\ProgramSettings.cs" />
     <Compile Include="Settings\WallpaperType.cs" />
+    <Compile Include="Settings\WindowAlignment.cs" />
     <Compile Include="StartUpManager.cs" />
     <Compile Include="Utils\AssemblyUtils.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="Utils\SerializeUtils.cs" />
-    <Compile Include="Utils\SystemInformationUtils.cs" />
+    <Compile Include="Utils\SystemUtils.cs" />
     <Compile Include="Utils\WindowUtils.cs" />
     <Compile Include="ViewManager.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
@@ -260,6 +261,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\1x1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Target.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Target.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Target32.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

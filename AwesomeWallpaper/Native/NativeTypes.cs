@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace AwesomeWallpaper
+namespace AwesomeWallpaper.Native
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct PerformanceInformation

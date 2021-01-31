@@ -3,17 +3,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Media;
 using System.Windows.Interop;
 using System.Linq;
 using System.IO;
 using System.Text;
 using Hardcodet.Wpf.TaskbarNotification;
+using AwesomeWallpaper.Native;
 using AwesomeWallpaper.Utils;
 using AwesomeWallpaper.ViewModels;
 using AwesomeWallpaper.Views;
 using AwesomeWallpaper.Settings;
-using static AwesomeWallpaper.NativeMethods;
+using static AwesomeWallpaper.Native.NativeMethods;
 
 namespace AwesomeWallpaper
 {
@@ -70,6 +70,17 @@ namespace AwesomeWallpaper
             Settings.VideoTransparency = settings.VideoTransparency;
             Settings.WebUrl = settings.WebUrl;
             Settings.WebRefreshInterval = settings.WebRefreshInterval == null ? null : (int?)settings.WebRefreshInterval.Value.TotalSeconds;
+            Settings.WindowHandle = settings.WindowHandle == IntPtr.Zero ? null : (long?)settings.WindowHandle.ToInt64();
+            Settings.WindowExTool = settings.WindowExTool;
+            Settings.WindowPreviouseHandle = settings.WindowPreviouseHandle == IntPtr.Zero ? null: (long?)settings.WindowPreviouseHandle.ToInt64();
+            Settings.WindowPreviouseExTool = settings.WindowPreviouseExTool;
+            Settings.WindowText = settings.WindowText;
+            Settings.WindowStatus = settings.WindowStatus;
+            Settings.WindowClassName = settings.WindowClassName;
+            Settings.WindowProcessName = settings.WindowProcessName;
+            Settings.WindowAlignment = settings.WindowAlignment;
+            Settings.WindowFullScreen = settings.WindowFullScreen;
+            Settings.WindowUseAfterRestart = settings.WindowUseAfterRestart;
 
             Update();
             CreateViews();
@@ -89,7 +100,7 @@ namespace AwesomeWallpaper
 
             WindowUtils.RefreshDesktop();
 
-            EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, (IntPtr hMonitor, IntPtr hdcMonitor, ref Rect rect, IntPtr data) =>
+            EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, (IntPtr hMonitor, IntPtr hdcMonitor, ref Native.Rect rect, IntPtr data) =>
             {
                 if (Settings.Monitor == null || Settings.Monitor == windows)
                 {
@@ -107,12 +118,8 @@ namespace AwesomeWallpaper
                                     Settings.WallpaperType == WallpaperType.Image ? new ImageView() :
                                     Settings.WallpaperType == WallpaperType.Web ? new WebView() :
                                     (UserControl)new GalleryView();
-                    var mainWindow = new MainWindow
+                    var mainWindow = new MainWindow (Settings, info.rcMonitor)
                     {
-                        MonitorLeft = info.rcMonitor.Left,
-                        MonitorTop = info.rcMonitor.Top,
-                        MonitorWidth = info.rcMonitor.Width,
-                        MonitorHeight = info.rcMonitor.Height,
                         DataContext = viewModel,
                     };
                     mainWindow.GridContainer.Children.Add(view);
@@ -288,7 +295,7 @@ namespace AwesomeWallpaper
             }
         }
 
-        public void LoadSettings()
+        public bool LoadSettings()
         {
             var settingsFileName = Path.GetFileNameWithoutExtension(AssemblyUtils.AssemblyLocation) + ".xml";
             settingsFileName = Path.Combine(AssemblyUtils.AssemblyDirectoryName, settingsFileName);
@@ -298,16 +305,19 @@ namespace AwesomeWallpaper
                 {
                     var xml = File.ReadAllText(settingsFileName, Encoding.UTF8);
                     Settings = SerializeUtils.Deserialize<ProgramSettings>(xml);
+                    return true;
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show($"Failed to load settings from the file {settingsFileName}{Environment.NewLine}{e.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
                 }
             }
             else
             {
                 Settings.VideoFileExtensions = new List<string> { "*.mp4", "*.mp3", "*.mpg", "*.mpeg", "*.avi" };
                 Settings.GalleryFileExtensions = new List<string> { "*.bmp", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.tiff" };
+                return true;
             }
         }
 

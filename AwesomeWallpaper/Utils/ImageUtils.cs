@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Drawing;
 using System.Windows.Media.Imaging;
-using static AwesomeWallpaper.NativeMethods;
+using static AwesomeWallpaper.Native.NativeMethods;
 
 namespace AwesomeWallpaper.Utils
 {

@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net.NetworkInformation;
 using System.IO;
-using static AwesomeWallpaper.NativeMethods;
+using System.Diagnostics;
+using AwesomeWallpaper.Native;
+using static AwesomeWallpaper.Native.NativeMethods;
 
 namespace AwesomeWallpaper.Utils
 {
-    static class SystemInformationUtils
+    static class SystemUtils
     {
         public static string GetBootTime()
         {
@@ -159,6 +161,18 @@ namespace AwesomeWallpaper.Utils
         public static string GetDriveFreeSpace(DriveInfo driveInfo)
         {
             return GetSize(driveInfo.TotalFreeSpace);
+        }
+
+        public static Process GetProcessByIdSafely(int processId)
+        {
+            try
+            {
+                return Process.GetProcessById(processId);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private static string GetSize(long size)

@@ -11,10 +11,12 @@ namespace AwesomeWallpaper.ViewModels
         internal Window Dialog;
         private Func<bool> _canExecuteOKCommand = () => true;
         private DelegateCommand _okCommand;
+        private bool _keepOpened;
 
         protected DialogViewModelBase(Window dialog)
         {
             Dialog = dialog;
+            _keepOpened = false;
             _okCommand = new DelegateCommand(() => OnOK(), _canExecuteOKCommand);
         }
 
@@ -25,7 +27,10 @@ namespace AwesomeWallpaper.ViewModels
 
         protected virtual void OnOK()
         {
-            Close(true);
+            if (!_keepOpened)
+            {
+                Close(true);
+            }
         }
 
         protected virtual void OnCancel()
@@ -86,6 +91,18 @@ namespace AwesomeWallpaper.ViewModels
             set
             {
                 SetProperty(ref _okCommand, value);
+            }
+        }
+
+        public bool KeepOpened
+        {
+            get
+            {
+                return _keepOpened;
+            }
+            set
+            {
+                SetProperty(ref _keepOpened, value);
             }
         }
     }

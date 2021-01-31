@@ -1,4 +1,5 @@
-﻿using AwesomeWallpaper.Settings;
+﻿using AwesomeWallpaper.Native;
+using AwesomeWallpaper.Settings;
 
 namespace AwesomeWallpaper.ViewModels
 {

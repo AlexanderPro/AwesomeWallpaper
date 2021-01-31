@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using AwesomeWallpaper.Settings;
-using static AwesomeWallpaper.NativeMethods;
+using static AwesomeWallpaper.Native.NativeMethods;
 
 namespace AwesomeWallpaper.ViewModels
 {
@@ -49,6 +49,17 @@ namespace AwesomeWallpaper.ViewModels
             VideoTransparency = settings.VideoTransparency;
             WebUrl = settings.WebUrl;
             WebRefreshInterval = settings.WebRefreshInterval == null ? (TimeSpan?)null : TimeSpan.FromSeconds(settings.WebRefreshInterval.Value);
+            WindowHandle = settings.WindowHandle == null ? IntPtr.Zero : new IntPtr(settings.WindowHandle.Value);
+            WindowExTool = settings.WindowExTool;
+            WindowPreviouseHandle = settings.WindowPreviouseHandle == null ? IntPtr.Zero : new IntPtr(settings.WindowPreviouseHandle.Value);
+            WindowPreviouseExTool = settings.WindowPreviouseExTool;
+            WindowText = settings.WindowText;
+            WindowStatus = settings.WindowStatus;
+            WindowClassName = settings.WindowClassName;
+            WindowProcessName = settings.WindowProcessName;
+            WindowAlignment = settings.WindowAlignment;
+            WindowFullScreen = settings.WindowFullScreen;
+            WindowUseAfterRestart = settings.WindowUseAfterRestart;
         }
 
         private int _selectedTabIndex;
@@ -289,6 +300,104 @@ namespace AwesomeWallpaper.ViewModels
             set { SetProperty(ref _webUrl, value); }
         }
 
+        private IntPtr _windowHandle = IntPtr.Zero;
+        public IntPtr WindowHandle
+        {
+            get { return _windowHandle; }
+            set { SetProperty(ref _windowHandle, value); }
+        }
+
+        private bool _windowExTool = false;
+        public bool WindowExTool
+        {
+            get { return _windowExTool; }
+            set { SetProperty(ref _windowExTool, value); }
+        }
+
+        private IntPtr _windowPreviouseHandle = IntPtr.Zero;
+        public IntPtr WindowPreviouseHandle
+        {
+            get { return _windowPreviouseHandle; }
+            set { SetProperty(ref _windowPreviouseHandle, value); }
+        }
+
+        private bool _windowPreviouseExTool = false;
+        public bool WindowPreviouseExTool
+        {
+            get { return _windowPreviouseExTool; }
+            set { SetProperty(ref _windowPreviouseExTool, value); }
+        }
+
+        private string _windowStatus = "Not Selected";
+        public string WindowStatus
+        {
+            get { return _windowStatus; }
+            set { SetProperty(ref _windowStatus, value); }
+        }
+
+        private string _windowText = "";
+        public string WindowText
+        {
+            get { return _windowText; }
+            set { SetProperty(ref _windowText, value); }
+        }
+
+        private string _windowClassName = "";
+        public string WindowClassName
+        {
+            get { return _windowClassName; }
+            set { SetProperty(ref _windowClassName, value); }
+        }
+
+        private string _windowProcessName = "";
+        public string WindowProcessName
+        {
+            get { return _windowProcessName; }
+            set { SetProperty(ref _windowProcessName, value); }
+        }
+
+        private WindowAlignment _windowAlignment = WindowAlignment.None;
+        public WindowAlignment WindowAlignment
+        {
+            get { return _windowAlignment; }
+            set { SetProperty(ref _windowAlignment, value); }
+        }
+
+        private bool _windowFullScreen = false;
+        public bool WindowFullScreen
+        {
+            get { return _windowFullScreen; }
+            set { SetProperty(ref _windowFullScreen, value); }
+        }
+
+        private bool _windowUseAfterRestart = false;
+        public bool WindowUseAfterRestart
+        {
+            get { return _windowUseAfterRestart; }
+            set { SetProperty(ref _windowUseAfterRestart, value); }
+        }
+
+        private int _windowRowHeight = 25;
+        public int WindowRowHeight
+        {
+            get { return _windowRowHeight; }
+            set { SetProperty(ref _windowRowHeight, value); }
+        }
+
+        private int _windowDelimiterRowHeight = 12;
+        public int WindowDelimiterRowHeight
+        {
+            get { return _windowDelimiterRowHeight; }
+            set { SetProperty(ref _windowDelimiterRowHeight, value); }
+        }
+
+        private int _windowImageRowHeight = 0;
+        public int WindowImageRowHeight
+        {
+            get { return _windowImageRowHeight; }
+            set { SetProperty(ref _windowImageRowHeight, value); }
+        }
+
         public IEnumerable<FontFamily> SystemFonts => Fonts.SystemFontFamilies.OrderBy(font => font.Source);
 
         public IEnumerable<int> FontSizes => new[] { 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40 };
@@ -304,7 +413,7 @@ namespace AwesomeWallpaper.ViewModels
             {
                 var monitors = new List<KeyValuePair<int?, string>>() { new KeyValuePair<int?, string>(null, "All") };
                 var monitor = 0;
-                EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, (IntPtr hMonitor, IntPtr hdcMonitor, ref Rect rect, IntPtr data) =>
+                EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, (IntPtr hMonitor, IntPtr hdcMonitor, ref Native.Rect rect, IntPtr data) =>
                 {
                     monitors.Add(new KeyValuePair<int?, string>(monitor, (monitor + 1).ToString()));
                     monitor++;
@@ -313,6 +422,8 @@ namespace AwesomeWallpaper.ViewModels
                 return monitors;
             }
         }
+
+        public IEnumerable<KeyValuePair<WindowAlignment, string>> WindowAlignments => Enum.GetValues(typeof(WindowAlignment)).Cast<WindowAlignment>().Select(x => new KeyValuePair<WindowAlignment, string>(x, x.ToString()));
 
         public IEnumerable<KeyValuePair<HorizontalAlignment, string>> HorizontalAlignments => Enum.GetValues(typeof(HorizontalAlignment)).Cast<HorizontalAlignment>().Select(x => new KeyValuePair<HorizontalAlignment, string>(x, x.ToString()));
 

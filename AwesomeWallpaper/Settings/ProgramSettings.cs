@@ -287,6 +287,88 @@ namespace AwesomeWallpaper.Settings
             set { SetProperty(ref _webUrl, value); }
         }
 
+        private long? _windowHandle = null;
+        [XmlIgnore]
+        public long? WindowHandle
+        {
+            get { return _windowHandle; }
+            set { SetProperty(ref _windowHandle, value); }
+        }
+
+        private bool _windowExTool = false;
+        [XmlIgnore]
+        public bool WindowExTool
+        {
+            get { return _windowExTool; }
+            set { SetProperty(ref _windowExTool, value); }
+        }
+
+        private long? _windowPreviouseHandle = null;
+        [XmlIgnore]
+        public long? WindowPreviouseHandle
+        {
+            get { return _windowPreviouseHandle; }
+            set { SetProperty(ref _windowPreviouseHandle, value); }
+        }
+
+        private bool _windowPreviouseExTool = false;
+        [XmlIgnore]
+        public bool WindowPreviouseExTool
+        {
+            get { return _windowPreviouseExTool; }
+            set { SetProperty(ref _windowPreviouseExTool, value); }
+        }
+
+        private string _windowStatus = "Not Selected";
+        [XmlIgnore]
+        public string WindowStatus
+        {
+            get { return _windowStatus; }
+            set { SetProperty(ref _windowStatus, value); }
+        }
+
+        private string _windowText = "";
+        public string WindowText
+        {
+            get { return _windowText; }
+            set { SetProperty(ref _windowText, value); }
+        }
+
+        private string _windowClassName = "";
+        public string WindowClassName
+        {
+            get { return _windowClassName; }
+            set { SetProperty(ref _windowClassName, value); }
+        }
+
+        private string _windowProcessName = "";
+        public string WindowProcessName
+        {
+            get { return _windowProcessName; }
+            set { SetProperty(ref _windowProcessName, value); }
+        }
+
+        private WindowAlignment _windowAlignment = WindowAlignment.None;
+        public WindowAlignment WindowAlignment
+        {
+            get { return _windowAlignment; }
+            set { SetProperty(ref _windowAlignment, value); }
+        }
+
+        private bool _windowFullScreen = false;
+        public bool WindowFullScreen
+        {
+            get { return _windowFullScreen; }
+            set { SetProperty(ref _windowFullScreen, value); }
+        }
+
+        private bool _windowUseAfterRestart = false;
+        public bool WindowUseAfterRestart
+        {
+            get { return _windowUseAfterRestart; }
+            set { SetProperty(ref _windowUseAfterRestart, value); }
+        }
+
         private List<string> _videoFileExtensions = new List<string> {};
         [XmlArray("VideoFileExtensions")]
         [XmlArrayItem("VideoFileExtension")]
@@ -303,6 +385,21 @@ namespace AwesomeWallpaper.Settings
         {
             get { return _galleryFileExtensions; }
             set { SetProperty(ref _galleryFileExtensions, value); }
+        }
+
+        public void ClearWindow()
+        {
+            WindowHandle = null;
+            WindowPreviouseHandle = null;
+            WindowExTool = false;
+            WindowPreviouseExTool = false;
+            WindowStatus = "";
+            WindowText = "";
+            WindowClassName = "";
+            WindowProcessName = "";
+            WindowAlignment = WindowAlignment.None;
+            WindowFullScreen = false;
+            WindowUseAfterRestart = false;
         }
     }
 }

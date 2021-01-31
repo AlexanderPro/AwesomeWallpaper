@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using Prism.Mvvm;
-using static AwesomeWallpaper.Utils.SystemInformationUtils;
+using static AwesomeWallpaper.Utils.SystemUtils;
 
 namespace AwesomeWallpaper.ViewModels
 {

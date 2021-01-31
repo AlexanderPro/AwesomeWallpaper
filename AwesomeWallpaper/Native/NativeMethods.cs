@@ -4,7 +4,7 @@ using System.Security;
 using System.Text;
 using System.Drawing;
 
-namespace AwesomeWallpaper
+namespace AwesomeWallpaper.Native
 {
     [SuppressUnmanagedCodeSecurity]
     static class NativeMethods
@@ -18,6 +18,9 @@ namespace AwesomeWallpaper
         [DllImport("user32")]
         public static extern IntPtr SetWindowPos(IntPtr hWnd, IntPtr hWndAfter, int x, int y, int dx, int cy, uint flags);
 
+        [DllImport("user32.dll")]
+        public static extern bool MoveWindow(IntPtr handle, int x, int y, int nWidth, int nHeight, bool bRepaint);
+
         [DllImport("user32")]
         public static extern bool EnumDisplayMonitors(IntPtr hDC, IntPtr clipRect, EnumMonitorProc proc, IntPtr data);
 
@@ -27,14 +30,27 @@ namespace AwesomeWallpaper
         [DllImport("user32")]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWindow(IntPtr hWnd);
+
         [DllImport("user32")]
         public static extern int SetWindowLong(IntPtr hWnd, int index, int value);
 
         [DllImport("user32")]
         public static extern int GetWindowLong(IntPtr hWnd, int index);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr processId);
+
         [DllImport("user32")]
         public static extern IntPtr GetDesktopWindow();
+
+        [DllImport("user32")]
+        public static extern IntPtr GetShellWindow();
 
         [DllImport("psapi")]
         public static extern bool GetPerformanceInfo(ref PerformanceInformation pi, int size);
@@ -63,8 +79,14 @@ namespace AwesomeWallpaper
         [DllImport("user32")]
         public static extern int SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern bool SendMessage(IntPtr hWnd, uint Msg, int wParam, StringBuilder lParam);
+
         [DllImport("user32.dll")]
         public static extern int SendMessageTimeout(IntPtr hWnd, int wMsg, int wParam, int lParam, SendMessageTimeoutFlags fuFlags, uint uTimeout, out int lpdwResult);
+
+        [DllImport("user32")]
+        public static extern int PostMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern int SystemParametersInfo(uint uiAction, uint uiParam, string pvParam, uint fWinIni);
@@ -104,5 +126,21 @@ namespace AwesomeWallpaper
 
         [DllImport("user32.dll")]
         public static extern IntPtr ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool PrintWindow(IntPtr hWnd, IntPtr hdc, int nFlags);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetCursor(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr WindowFromPoint(Point p);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetParent(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
     }
 }
