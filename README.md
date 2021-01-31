@@ -3,11 +3,12 @@
 
 AwesomeWallpaper plays videos, shows images and system information on your desktop wallpaper. It supports next modes:
 
+* **System Information.** Shows system information on your desktop as Sysinternals BgInfo tool.
 * **Image.** Shows an image on your desktop.
 * **Gallery.** Shows several images on your desktop.
 * **Video.** Plays a video on your desktop.
 * **Web.** Allows to view web pages, including youtube in the embed mode.
-* **System Information.** Shows system information on your desktop as Sysinternals BgInfo tool.
+* **Window.** Allows to set almost any window from your desktop as wallpaper.
 
 Features
 --------------------
@@ -18,6 +19,7 @@ Screenshot
 ------------------
 
 ![alt tag](https://user-images.githubusercontent.com/8102586/68137367-e910fe80-ff37-11e9-8e4f-6fec49c3d036.jpg)
+![alt tag](https://user-images.githubusercontent.com/8102586/106395625-526e0e80-6414-11eb-8d0e-9128969841d3.gif)
 
 Requirements
 --------------------
