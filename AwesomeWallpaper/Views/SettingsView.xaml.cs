@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
@@ -116,7 +117,7 @@ namespace AwesomeWallpaper.Views
 
             if (TabControlMain.SelectedIndex == 6 || (TabControlMain.SelectedIndex == 0 && viewModel.WallpaperType == WallpaperType.Window))
             {
-                if (viewModel.Monitor == null)
+                if (viewModel.Monitor == null && viewModel.Monitors.Count() > 2)
                 {
                     MessageBox.Show("You should select only one monitor on the \"General\" tab.", "Attention");
                     viewModel.KeepOpened = true;
