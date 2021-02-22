@@ -128,16 +128,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Extensions\BitmapExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Native\NativeConstants.cs" />
     <Compile Include="Native\NativeMethods.cs" />
     <Compile Include="Native\NativeTypes.cs" />
+    <Compile Include="Settings\BackgroundMode.cs" />
     <Compile Include="Settings\GalleryState.cs" />
     <Compile Include="Settings\ProgramSettings.cs" />
     <Compile Include="Settings\WallpaperType.cs" />
     <Compile Include="Settings\WindowAlignment.cs" />
     <Compile Include="StartUpManager.cs" />
     <Compile Include="Utils\AssemblyUtils.cs" />
-    <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="Utils\SerializeUtils.cs" />
     <Compile Include="Utils\SystemUtils.cs" />
     <Compile Include="Utils\WindowUtils.cs" />

@@ -83,7 +83,7 @@ namespace AwesomeWallpaper.Utils
             SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, null, SPIF_UPDATEINIFILE);
         }
 
-        public static Image CaptureWindow(IntPtr hwnd, int x, int y, int width, int height)
+        public static Bitmap CaptureWindow(IntPtr hwnd, int x, int y, int width, int height)
         {
             // get te hDC of the target window
             var hdcSrc = GetWindowDC(hwnd);

@@ -28,6 +28,13 @@ namespace AwesomeWallpaper.Settings
             set { SetProperty(ref _wallpaperType, value); }
         }
 
+        private BackgroundMode _backgroundMode = BackgroundMode.None;
+        public BackgroundMode BackgroundMode
+        {
+            get { return _backgroundMode; }
+            set { SetProperty(ref _backgroundMode, value); }
+        }
+
         private bool _interactiveMode = false;
         [XmlIgnore]
         public bool InteractiveMode

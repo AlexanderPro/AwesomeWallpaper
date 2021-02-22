@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using AwesomeWallpaper.Extensions;
 using AwesomeWallpaper.Settings;
 using static AwesomeWallpaper.Native.NativeMethods;
 
@@ -17,6 +18,7 @@ namespace AwesomeWallpaper.ViewModels
             Settings = settings;
 
             WallpaperType = settings.WallpaperType;
+            BackgroundMode = settings.BackgroundMode;
             Monitor = settings.Monitor;
             SystemInformationFontFamily = new FontFamily(settings.SystemInformationFontFamily);
             SystemInformationTextColor = settings.SystemInformationTextColor;
@@ -81,6 +83,13 @@ namespace AwesomeWallpaper.ViewModels
         {
             get { return _wallpaperType; }
             set { SetProperty(ref _wallpaperType, value); }
+        }
+
+        private BackgroundMode _backgroundMode;
+        public BackgroundMode BackgroundMode
+        {
+            get { return _backgroundMode; }
+            set { SetProperty(ref _backgroundMode, value); }
         }
 
         private string _videoFileName = "";
@@ -423,14 +432,16 @@ namespace AwesomeWallpaper.ViewModels
             }
         }
 
-        public IEnumerable<KeyValuePair<WindowAlignment, string>> WindowAlignments => Enum.GetValues(typeof(WindowAlignment)).Cast<WindowAlignment>().Select(x => new KeyValuePair<WindowAlignment, string>(x, x.ToString()));
+        public IEnumerable<KeyValuePair<WindowAlignment, string>> WindowAlignments => EnumExtensions.AsEnumerable<WindowAlignment>().Select(x => new KeyValuePair<WindowAlignment, string>(x, x.ToString()));
 
-        public IEnumerable<KeyValuePair<HorizontalAlignment, string>> HorizontalAlignments => Enum.GetValues(typeof(HorizontalAlignment)).Cast<HorizontalAlignment>().Select(x => new KeyValuePair<HorizontalAlignment, string>(x, x.ToString()));
+        public IEnumerable<KeyValuePair<HorizontalAlignment, string>> HorizontalAlignments => EnumExtensions.AsEnumerable<HorizontalAlignment>().Select(x => new KeyValuePair<HorizontalAlignment, string>(x, x.ToString()));
 
-        public IEnumerable<KeyValuePair<VerticalAlignment, string>> VerticalAlignments => Enum.GetValues(typeof(VerticalAlignment)).Cast<VerticalAlignment>().Select(x => new KeyValuePair<VerticalAlignment, string>(x, x.ToString()));
+        public IEnumerable<KeyValuePair<VerticalAlignment, string>> VerticalAlignments => EnumExtensions.AsEnumerable<VerticalAlignment>().Select(x => new KeyValuePair<VerticalAlignment, string>(x, x.ToString()));
 
-        public IEnumerable<KeyValuePair<Stretch, string>> Stretches => Enum.GetValues(typeof(Stretch)).Cast<Stretch>().Select(x => new KeyValuePair<Stretch, string>(x, x.ToString()));
+        public IEnumerable<KeyValuePair<Stretch, string>> Stretches => EnumExtensions.AsEnumerable<Stretch>().Select(x => new KeyValuePair<Stretch, string>(x, x.ToString()));
 
-        public IEnumerable<KeyValuePair<WallpaperType, string>> WallpaperTypes => Enum.GetValues(typeof(WallpaperType)).Cast<WallpaperType>().Select(x => new KeyValuePair<WallpaperType, string>(x, x.ToString()));
+        public IEnumerable<KeyValuePair<WallpaperType, string>> WallpaperTypes => EnumExtensions.AsEnumerable<WallpaperType>().Select(x => new KeyValuePair<WallpaperType, string>(x, x.ToString()));
+
+        public IEnumerable<KeyValuePair<BackgroundMode, string>> BackgroundModes => EnumExtensions.AsEnumerable<BackgroundMode>().Select(x => new KeyValuePair<BackgroundMode, string>(x, x.GetDisplayName()));
     }
 }

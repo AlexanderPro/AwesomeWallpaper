@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
+using AwesomeWallpaper.Extensions;
 using AwesomeWallpaper.Settings;
 using AwesomeWallpaper.ViewModels;
 using AwesomeWallpaper.Utils;
@@ -213,7 +214,7 @@ namespace AwesomeWallpaper.Views
                         viewModel.WindowStatus = "Selected";
                         viewModel.WindowText = WindowUtils.GetWmGetText(parentHandle);
                         viewModel.WindowProcessName = WindowUtils.GetProcessName(parentHandle);
-                        WindowImage.Source = ImageUtils.ConvertImageToBitmapSource(WindowUtils.PrintWindow(parentHandle));
+                        WindowImage.Source = WindowUtils.PrintWindow(parentHandle).ConvertToBitmapSource();
                         viewModel.WindowDelimiterRowHeight = 0;
                         viewModel.WindowRowHeight = 0;
                         viewModel.WindowImageRowHeight = 155;

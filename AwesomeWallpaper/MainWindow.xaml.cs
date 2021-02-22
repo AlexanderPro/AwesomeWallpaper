@@ -4,13 +4,13 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Forms;
+using System.Drawing;
+using AwesomeWallpaper.Extensions;
 using AwesomeWallpaper.Settings;
 using AwesomeWallpaper.Native;
 using static AwesomeWallpaper.Native.NativeConstants;
 using static AwesomeWallpaper.Native.NativeMethods;
 using static AwesomeWallpaper.Utils.WindowUtils;
-using static AwesomeWallpaper.Utils.ImageUtils;
 
 namespace AwesomeWallpaper
 {
@@ -177,9 +177,10 @@ namespace AwesomeWallpaper
                 SetParent(handle, workerWHandle);
                 SetWindowPos(handle, (IntPtr)1, rect.Left, rect.Top, MonitorRect.Width, MonitorRect.Height, 0 | 0x0010);
                 var imageBrush = new ImageBrush();
-                using (var image = CaptureWindow(workerWHandle, rect.Left, rect.Top, MonitorRect.Width, MonitorRect.Height))
+                using (var originalBitmap = CaptureWindow(workerWHandle, rect.Left, rect.Top, MonitorRect.Width, MonitorRect.Height))
+                using (var bitmap = ConvertBitmap(originalBitmap, Settings.BackgroundMode))
                 {
-                    imageBrush.ImageSource = ConvertImageToBitmapSource(image);
+                    imageBrush.ImageSource = bitmap.ConvertToBitmapSource();
                     Background = imageBrush;
                 }
                 RefreshDesktop();
@@ -227,6 +228,19 @@ namespace AwesomeWallpaper
             }
 
             return IntPtr.Zero;
+        }
+
+        private Bitmap ConvertBitmap(Bitmap original, BackgroundMode mode)
+        {
+            switch (mode)
+            {
+                case BackgroundMode.None: return original.Copy();
+                case BackgroundMode.Pixelate: return original.Pixelate(3);
+                case BackgroundMode.Dark: return original.Dark();
+                case BackgroundMode.BlackAndWhite: return original.BlackAndWhite();
+                case BackgroundMode.Grayscale: return original.Grayscale();
+                default: return original.Copy();
+            }
         }
     }
 }

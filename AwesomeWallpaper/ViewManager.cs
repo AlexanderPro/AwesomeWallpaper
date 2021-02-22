@@ -37,6 +37,7 @@ namespace AwesomeWallpaper
         public void ApplySettings(SettingsViewModel settings)
         {
             Settings.WallpaperType = settings.WallpaperType;
+            Settings.BackgroundMode = settings.BackgroundMode;
             Settings.Monitor = settings.Monitor;
             Settings.SystemInformationFontFamily = settings.SystemInformationFontFamily.Source;
             Settings.SystemInformationFontSize = settings.SystemInformationFontSize;

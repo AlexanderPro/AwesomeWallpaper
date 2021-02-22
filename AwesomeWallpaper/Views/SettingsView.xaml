@@ -30,6 +30,8 @@
                             <RowDefinition Height="12" />
                             <RowDefinition Height="25" />
                             <RowDefinition Height="12" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="12" />
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Wallpaper Type:" Grid.Row="0" VerticalAlignment="Center" />
@@ -37,6 +39,9 @@
 
                         <TextBlock Text="Monitor:" Grid.Row="2" VerticalAlignment="Center" />
                         <ComboBox Grid.Row="2" Grid.Column="2" Padding="3" ItemsSource="{Binding Monitors}" SelectedValue="{Binding Monitor, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+
+                        <TextBlock Text="Background Mode:" Grid.Row="4" VerticalAlignment="Center" />
+                        <ComboBox Grid.Row="4" Grid.Column="2" Padding="3" ItemsSource="{Binding BackgroundModes}" SelectedValue="{Binding BackgroundMode, Mode=TwoWay}" SelectedValuePath="Key" DisplayMemberPath="Value" />
                     </Grid>
                 </StackPanel>
             </TabItem>
