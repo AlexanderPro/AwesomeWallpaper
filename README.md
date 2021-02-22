@@ -19,6 +19,7 @@ Screenshot
 ------------------
 
 ![alt tag](https://user-images.githubusercontent.com/8102586/68137367-e910fe80-ff37-11e9-8e4f-6fec49c3d036.jpg)
+![alt tag](https://user-images.githubusercontent.com/8102586/108689905-bc0ca480-750a-11eb-94ac-38c975cd5d1d.jpg)
 ![alt tag](https://user-images.githubusercontent.com/8102586/106395625-526e0e80-6414-11eb-8d0e-9128969841d3.gif)
 
 Requirements
