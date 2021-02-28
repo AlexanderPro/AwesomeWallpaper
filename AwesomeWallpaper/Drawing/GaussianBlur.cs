@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace AwesomeWallpaper.Drawing
 {
+    /// <summary>
+    /// https://github.com/mdymel/superfastblur
+    /// </summary>
     public class GaussianBlur
     {
         private readonly int[] _alpha;
