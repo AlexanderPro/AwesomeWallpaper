@@ -7,16 +7,19 @@ namespace AwesomeWallpaper.Settings
         [Display(Name = "None")]
         None = 0,
 
+        [Display(Name = "Blur")]
+        Blur = 1,
+
         [Display(Name = "Pixelate")]
-        Pixelate = 1,
+        Pixelate = 2,
 
         [Display(Name = "Dark")]
-        Dark = 2,
+        Dark = 3,
 
         [Display(Name = "Black And White")]
-        BlackAndWhite = 3,
+        BlackAndWhite = 4,
 
         [Display(Name = "Grayscale")]
-        Grayscale = 4
+        Grayscale = 5
     }
 }

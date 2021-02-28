@@ -235,6 +235,7 @@ namespace AwesomeWallpaper
             switch (mode)
             {
                 case BackgroundMode.None: return original.Copy();
+                case BackgroundMode.Blur: return original.Blur(3);
                 case BackgroundMode.Pixelate: return original.Pixelate(3);
                 case BackgroundMode.Dark: return original.Dark();
                 case BackgroundMode.BlackAndWhite: return original.BlackAndWhite();

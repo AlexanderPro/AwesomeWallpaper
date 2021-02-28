@@ -4,6 +4,7 @@ using System.Windows.Interop;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
+using AwesomeWallpaper.Drawing;
 using static AwesomeWallpaper.Native.NativeMethods;
 
 namespace AwesomeWallpaper.Extensions
@@ -118,58 +119,10 @@ namespace AwesomeWallpaper.Extensions
             return newBitmap;
         }
 
-        public static Bitmap Blur(this Bitmap bitmap, int blurSize)
+        public static Bitmap Blur(this Bitmap bitmap, int radial)
         {
-            var newBitmap = new Bitmap(bitmap.Width, bitmap.Height);
-
-            // make an exact copy of the bitmap provided
-            using (var graphics = Graphics.FromImage(newBitmap))
-            {
-                graphics.DrawImage(bitmap, new Rectangle(0, 0, bitmap.Width, bitmap.Height), new Rectangle(0, 0, bitmap.Width, bitmap.Height), GraphicsUnit.Pixel);
-            }
-
-            // look at every pixel in the blur rectangle
-            for (var xx = 0; xx < newBitmap.Width; xx++)
-            {
-                for (var yy = 0; yy < newBitmap.Height; yy++)
-                {
-                    var avgR = 0;
-                    var avgG = 0;
-                    var avgB = 0;
-                    var blurPixelCount = 0;
-
-                    // average the color of the red, green and blue for each pixel in the
-                    // blur size while making sure you don't go outside the bitmap bounds
-                    for (var x = xx; (x < xx + blurSize && x < newBitmap.Width); x++)
-                    {
-                        for (var y = yy; (y < yy + blurSize && y < newBitmap.Height); y++)
-                        {
-                            var pixel = newBitmap.GetPixel(x, y);
-
-                            avgR += pixel.R;
-                            avgG += pixel.G;
-                            avgB += pixel.B;
-
-                            blurPixelCount++;
-                        }
-                    }
-
-                    avgR = avgR / blurPixelCount;
-                    avgG = avgG / blurPixelCount;
-                    avgB = avgB / blurPixelCount;
-
-                    // now that we know the average for the blur size, set each pixel to that color
-                    for (var x = xx; x < xx + blurSize && x < newBitmap.Width && x < newBitmap.Width; x++)
-                    {
-                        for (var y = yy; y < yy + blurSize && y < newBitmap.Height && y < newBitmap.Height; y++)
-                        {
-                            newBitmap.SetPixel(x, y, Color.FromArgb(avgR, avgG, avgB));
-                        }
-                    }
-                }
-            }
-
-            return newBitmap;
+            var blur = new GaussianBlur(bitmap);
+            return blur.Process(radial);
         }
 
         public static Bitmap Copy(this Bitmap bitmap)
