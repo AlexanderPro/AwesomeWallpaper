@@ -1,5 +1,10 @@
-![AwesomeWallpaper](https://user-images.githubusercontent.com/8102586/68278979-875dab00-0083-11ea-9b03-3293b5101d25.png) AwesomeWallpaper
-=============
+<div align="center">
+
+<img src="./AwesomeWallpaper/Images/AwesomeWallpaper.png" alt="logo" width="72">
+
+# AwesomeWallpaper
+
+</div>
 
 AwesomeWallpaper plays videos, shows images and system information on your desktop wallpaper. It supports next modes:
 
